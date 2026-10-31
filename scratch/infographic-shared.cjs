@@ -128,8 +128,8 @@ function parseGraphicItems(topic) {
   return items;
 }
 
-// Common Shared Defs & Header Generator
-function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion, highlightWord, subtitle) {
+// Common Shared Header Generator with dynamic totalHeight
+function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion, highlightWord, subtitle, totalHeight) {
   const headlineLines = wrapSvgText(mainQuestion, 38);
   let headlineSvg = '';
   let curY = 205;
@@ -154,11 +154,11 @@ function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion
     curY: curY + 6,
     svg: `
   <!-- Background with Rich Radial Lighting and Enterprise Grid -->
-  <rect width="1200" height="1500" fill="#F8FAFC" />
-  <rect width="1200" height="1500" fill="url(#dotGrid)" />
+  <rect width="1200" height="${totalHeight}" fill="#F8FAFC" />
+  <rect width="1200" height="${totalHeight}" fill="url(#dotGrid)" />
   <circle cx="1000" cy="200" r="350" fill="url(#ambientGlowBlue)" />
-  <circle cx="200" cy="1100" r="400" fill="url(#ambientGlowIndigo)" />
-  <rect x="20" y="20" width="1160" height="1460" rx="20" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
+  <circle cx="200" cy="${totalHeight - 300}" r="400" fill="url(#ambientGlowIndigo)" />
+  <rect x="20" y="20" width="1160" height="${totalHeight - 40}" rx="20" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
 
   <!-- Top Header Bar -->
   <g transform="translate(60, 44)">
@@ -196,11 +196,14 @@ function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion
   };
 }
 
-// Common Footer & CTA Bar
-function renderSvgFooter(topic, ctaHeadline, ctaSubtext, ctaButtonText, footerUrl, footerTags) {
+// Common Footer & CTA Bar placed dynamically immediately after content (no empty gap)
+function renderSvgFooter(topic, ctaHeadline, ctaSubtext, ctaButtonText, footerUrl, footerTags, contentBottom) {
+  const ctaY = contentBottom + 20;
+  const footerY = ctaY + 82 + 28;
+
   return `
   <!-- Bottom Call-To-Action Bar -->
-  <g transform="translate(60, 1344)">
+  <g transform="translate(60, ${ctaY})">
     <rect width="1080" height="82" rx="16" fill="url(#ctaGradient)" filter="url(#ctaShadow)" />
     <text x="28" y="36" font-family="Segoe UI, -apple-system, sans-serif" font-size="17" font-weight="800" fill="#FFFFFF">${xmlEscape(ctaHeadline)}</text>
     <text x="28" y="58" font-family="Segoe UI, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#93C5FD">${xmlEscape(ctaSubtext)}</text>
@@ -211,8 +214,8 @@ function renderSvgFooter(topic, ctaHeadline, ctaSubtext, ctaButtonText, footerUr
   </g>
 
   <!-- Footer Info -->
-  <text x="60" y="1458" font-family="monospace, Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#0F172A" letter-spacing="1">${xmlEscape(footerUrl)}</text>
-  <text x="1140" y="1458" font-family="monospace, Segoe UI, sans-serif" font-size="11" font-weight="700" fill="#2563EB" text-anchor="end" letter-spacing="1">${xmlEscape(footerTags)}</text>
+  <text x="60" y="${footerY}" font-family="monospace, Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#0F172A" letter-spacing="1">${xmlEscape(footerUrl)}</text>
+  <text x="1140" y="${footerY}" font-family="monospace, Segoe UI, sans-serif" font-size="11" font-weight="700" fill="#2563EB" text-anchor="end" letter-spacing="1">${xmlEscape(footerTags)}</text>
   `;
 }
 
@@ -220,18 +223,18 @@ function renderSvgFooter(topic, ctaHeadline, ctaSubtext, ctaButtonText, footerUr
 const SVG_DEFS = `
   <defs>
     <pattern id="dotGrid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.2" fill="#E2E8F0" />
+      <circle cx="2" cy="2" r="1.2" fill="#CBD5E1" />
     </pattern>
     <radialGradient id="ambientGlowBlue" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.08" />
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.1" />
       <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="ambientGlowIndigo" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.06" />
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.08" />
       <stop offset="100%" stop-color="#6366F1" stop-opacity="0" />
     </radialGradient>
     <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.05" />
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.06" />
     </filter>
     <filter id="ctaShadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1E3A8A" flood-opacity="0.3" />
