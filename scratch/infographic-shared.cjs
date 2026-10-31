@@ -128,30 +128,44 @@ function parseGraphicItems(topic) {
   return items;
 }
 
+// Dynamic content start position calculator based on headline length
+function getContentStartY(mainQuestion, maxCharsPerLine = 40) {
+  const headlineLines = wrapSvgText(mainQuestion, maxCharsPerLine);
+  const headlineStartY = 175;
+  const subtitleY = headlineStartY + (headlineLines.length * 38);
+  // Subtitle height is 22px, followed by 26px clean breathing room
+  return subtitleY + 22 + 26;
+}
+
 // Common Shared Header Generator with dynamic totalHeight
 function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion, highlightWord, subtitle, totalHeight) {
-  const headlineLines = wrapSvgText(mainQuestion, 38);
+  const headlineLines = wrapSvgText(mainQuestion, 40);
   let headlineSvg = '';
-  let curY = 205;
+  const headlineStartY = 175;
+  let textY = headlineStartY;
 
   headlineLines.forEach(line => {
     if (highlightWord && line.includes(highlightWord)) {
       const parts = line.split(highlightWord);
       headlineSvg += `
-        <text x="60" y="${curY}" font-family="Segoe UI, -apple-system, sans-serif" font-size="33" font-weight="900" fill="#0F172A">
+        <text x="60" y="${textY}" font-family="Segoe UI, -apple-system, sans-serif" font-size="32" font-weight="900" fill="#0F172A">
           ${xmlEscape(parts[0])}<tspan fill="#2563EB" text-decoration="underline">${xmlEscape(highlightWord)}</tspan>${xmlEscape(parts[1] || '')}
         </text>`;
     } else {
       headlineSvg += `
-        <text x="60" y="${curY}" font-family="Segoe UI, -apple-system, sans-serif" font-size="33" font-weight="900" fill="#0F172A">
+        <text x="60" y="${textY}" font-family="Segoe UI, -apple-system, sans-serif" font-size="32" font-weight="900" fill="#0F172A">
           ${xmlEscape(line)}
         </text>`;
     }
-    curY += 40;
+    textY += 38;
   });
 
+  const subtitleY = textY;
+  const contentStartY = subtitleY + 22 + 26;
+
   return {
-    curY: curY + 6,
+    contentStartY,
+    curY: contentStartY,
     svg: `
   <!-- Background with Rich Radial Lighting and Enterprise Grid -->
   <rect width="1200" height="${totalHeight}" fill="#F8FAFC" />
@@ -179,7 +193,7 @@ function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion
   <line x1="60" y1="104" x2="1140" y2="104" stroke="#E2E8F0" stroke-width="1.5" />
 
   <!-- Eyebrow Tag -->
-  <g transform="translate(60, 124)">
+  <g transform="translate(60, 122)">
     <rect width="${Math.min(eyebrowTags.length * 9.2 + 30, 640)}" height="26" rx="13" fill="#DBEAFE" />
     <text x="16" y="17" font-family="monospace, Segoe UI, sans-serif" font-size="10.5" font-weight="800" fill="#1E40AF" letter-spacing="0.5">${xmlEscape(eyebrowTags)}</text>
   </g>
@@ -187,12 +201,12 @@ function renderSvgHeader(topic, idFormatted, category, eyebrowTags, mainQuestion
   <!-- Headline -->
   ${headlineSvg}
 
-  <!-- Subtitle -->
-  <g transform="translate(60, ${curY})">
+  <!-- Subtitle (Clear, unmerged, strictly separated) -->
+  <g transform="translate(60, ${subtitleY})">
     <rect width="4" height="22" rx="2" fill="#2563EB" />
-    <text x="16" y="16" font-family="Segoe UI, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#475569">${xmlEscape(subtitle)}</text>
+    <text x="16" y="16" font-family="Segoe UI, -apple-system, sans-serif" font-size="14.5" font-weight="600" fill="#475569">${xmlEscape(subtitle)}</text>
   </g>
-    `
+  `
   };
 }
 
@@ -259,6 +273,7 @@ module.exports = {
   wrapSvgText,
   getLayoutType,
   parseGraphicItems,
+  getContentStartY,
   renderSvgHeader,
   renderSvgFooter,
   SVG_DEFS

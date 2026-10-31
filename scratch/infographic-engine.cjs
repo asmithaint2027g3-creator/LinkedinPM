@@ -3,6 +3,7 @@ const {
   wrapSvgText,
   getLayoutType,
   parseGraphicItems,
+  getContentStartY,
   renderSvgHeader,
   renderSvgFooter,
   SVG_DEFS
@@ -61,26 +62,50 @@ const CATEGORY_CONTROLS = {
 // 1. LAYOUT: MATRIX 2x2 (QUADRANTS)
 // ─────────────────────────────────────────────────────────────────────────────
 function renderMatrixLayout(topic, data, items) {
-  // Calculate dynamic heights
-  // Headline ends around 245
-  // Matrix starts at cY = curY + 24
-  // 4 Cards: 2 rows of height 240, gap 16 -> ends at cY + 24 + 240 + 16 + 240 = cY + 520
-  // Secondary solution card at cY + 536, height 124 -> ends at cY + 660
-  // Content bottom = cY + 660
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 660;
+  const cY = getContentStartY(data.mainQuestion);
+  const cardHeight = 138;
+  const rowGap = 12;
+  const stripHeight = 104;
+
+  const topRowY = cY + 24;
+  const bottomRowY = topRowY + cardHeight + rowGap;
+  const stripY = bottomRowY + cardHeight + 14;
+  const contentBottom = stripY + stripHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const qCards = [
-    { q: 'QUADRANT I', bg: '#FFFFFF', border: '#BFDBFE', tagBg: '#EFF6FF', tagColor: '#1D4ED8', item: items[0] },
-    { q: 'QUADRANT II', bg: '#FFFFFF', border: '#BFDBFE', tagBg: '#EFF6FF', tagColor: '#1D4ED8', item: items[1] },
-    { q: 'QUADRANT III', bg: '#FFFFFF', border: '#CBD5E1', tagBg: '#F1F5F9', tagColor: '#475569', item: items[2] },
-    { q: 'QUADRANT IV', bg: '#FFFFFF', border: '#CBD5E1', tagBg: '#F1F5F9', tagColor: '#475569', item: items[3] }
+    { q: 'QUADRANT I', border: '#BFDBFE', tagBg: '#EFF6FF', tagColor: '#1D4ED8', accent: '#2563EB', item: items[0] },
+    { q: 'QUADRANT II', border: '#BFDBFE', tagBg: '#EFF6FF', tagColor: '#1D4ED8', accent: '#3B82F6', item: items[1] },
+    { q: 'QUADRANT III', border: '#CBD5E1', tagBg: '#F1F5F9', tagColor: '#475569', accent: '#64748B', item: items[2] },
+    { q: 'QUADRANT IV', border: '#CBD5E1', tagBg: '#F1F5F9', tagColor: '#475569', accent: '#64748B', item: items[3] }
   ];
+
+  function renderQCard(qc, x, y) {
+    const descLines = wrapSvgText(qc.item.desc, 56);
+    return `
+    <g transform="translate(${x}, ${y})">
+      <rect width="525" height="${cardHeight}" rx="14" fill="#FFFFFF" stroke="${qc.border}" stroke-width="1.5" filter="url(#cardShadow)" />
+      <rect x="0" y="16" width="5" height="52" rx="2.5" fill="${qc.accent}" />
+      
+      <g transform="translate(20, 16)">
+        <rect width="96" height="22" rx="5" fill="${qc.tagBg}" />
+        <text x="48" y="15" font-family="monospace, sans-serif" font-size="10.5" font-weight="800" fill="${qc.tagColor}" text-anchor="middle">${qc.q}</text>
+      </g>
+
+      <text x="20" y="60" font-family="Segoe UI, sans-serif" font-size="16" font-weight="800" fill="#0F172A">${xmlEscape(qc.item.title)}</text>
+      <text x="20" y="82" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(descLines[0] || '')}</text>
+      <text x="20" y="98" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(descLines[1] || '')}</text>
+
+      <g transform="translate(20, 106)">
+        <rect width="485" height="22" rx="5" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1" />
+        <text x="12" y="15" font-family="Segoe UI, sans-serif" font-size="10.5" font-weight="700" fill="#1D4ED8">&#9656; Recommended Trigger: ${xmlEscape(qc.item.metric ? qc.item.metric + ' ' : '')}${xmlEscape(qc.item.desc.slice(0, 48))}</text>
+      </g>
+    </g>
+    `;
+  }
 
   const cardSvg = `
   <!-- Matrix Category Eyebrow -->
@@ -90,91 +115,33 @@ function renderMatrixLayout(topic, data, items) {
     <text x="22" y="12" font-family="Segoe UI, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#1D4ED8" letter-spacing="1">FOUR-QUADRANT COMMERCIAL OPPORTUNITY MATRIX</text>
   </g>
 
-  <!-- 4 Big Quadrant Cards -->
-  <!-- Top Left -->
-  <g transform="translate(60, ${cY + 24})">
-    <rect width="525" height="240" rx="16" fill="#FFFFFF" stroke="${qCards[0].border}" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect x="0" y="24" width="6" height="64" rx="3" fill="#2563EB" />
-    <rect x="24" y="20" width="110" height="24" rx="6" fill="${qCards[0].tagBg}" />
-    <text x="79" y="36" font-family="monospace, sans-serif" font-size="10.5" font-weight="800" fill="${qCards[0].tagColor}" text-anchor="middle">${qCards[0].q}</text>
-    <text x="24" y="74" font-family="Segoe UI, sans-serif" font-size="17" font-weight="800" fill="#0F172A">${xmlEscape(qCards[0].item.title)}</text>
-    <text x="24" y="102" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[0].item.desc, 56)[0] || '')}</text>
-    <text x="24" y="122" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[0].item.desc, 56)[1] || '')}</text>
-    <text x="24" y="142" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[0].item.desc, 56)[2] || '')}</text>
-    <g transform="translate(24, 184)">
-      <rect width="477" height="34" rx="8" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1" />
-      <text x="14" y="22" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#1D4ED8">&#9656; Recommended Action: Automated Signal Trigger Cadence</text>
-    </g>
-  </g>
-
-  <!-- Top Right -->
-  <g transform="translate(615, ${cY + 24})">
-    <rect width="525" height="240" rx="16" fill="#FFFFFF" stroke="${qCards[1].border}" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect x="0" y="24" width="6" height="64" rx="3" fill="#3B82F6" />
-    <rect x="24" y="20" width="110" height="24" rx="6" fill="${qCards[1].tagBg}" />
-    <text x="79" y="36" font-family="monospace, sans-serif" font-size="10.5" font-weight="800" fill="${qCards[1].tagColor}" text-anchor="middle">${qCards[1].q}</text>
-    <text x="24" y="74" font-family="Segoe UI, sans-serif" font-size="17" font-weight="800" fill="#0F172A">${xmlEscape(qCards[1].item.title)}</text>
-    <text x="24" y="102" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[1].item.desc, 56)[0] || '')}</text>
-    <text x="24" y="122" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[1].item.desc, 56)[1] || '')}</text>
-    <text x="24" y="142" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[1].item.desc, 56)[2] || '')}</text>
-    <g transform="translate(24, 184)">
-      <rect width="477" height="34" rx="8" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1" />
-      <text x="14" y="22" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#1D4ED8">&#9656; Recommended Action: Account-Level Intent Interception</text>
-    </g>
-  </g>
-
-  <!-- Bottom Left -->
-  <g transform="translate(60, ${cY + 280})">
-    <rect width="525" height="240" rx="16" fill="#FFFFFF" stroke="${qCards[2].border}" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect x="0" y="24" width="6" height="64" rx="3" fill="#64748B" />
-    <rect x="24" y="20" width="110" height="24" rx="6" fill="${qCards[2].tagBg}" />
-    <text x="79" y="36" font-family="monospace, sans-serif" font-size="10.5" font-weight="800" fill="${qCards[2].tagColor}" text-anchor="middle">${qCards[2].q}</text>
-    <text x="24" y="74" font-family="Segoe UI, sans-serif" font-size="17" font-weight="800" fill="#0F172A">${xmlEscape(qCards[2].item.title)}</text>
-    <text x="24" y="102" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[2].item.desc, 56)[0] || '')}</text>
-    <text x="24" y="122" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[2].item.desc, 56)[1] || '')}</text>
-    <text x="24" y="142" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[2].item.desc, 56)[2] || '')}</text>
-    <g transform="translate(24, 184)">
-      <rect width="477" height="34" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="14" y="22" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#475569">&#9656; Recommended Action: Cross-Selling Blueprint Orchestration</text>
-    </g>
-  </g>
-
-  <!-- Bottom Right -->
-  <g transform="translate(615, ${cY + 280})">
-    <rect width="525" height="240" rx="16" fill="#FFFFFF" stroke="${qCards[3].border}" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect x="0" y="24" width="6" height="64" rx="3" fill="#64748B" />
-    <rect x="24" y="20" width="110" height="24" rx="6" fill="${qCards[3].tagBg}" />
-    <text x="79" y="36" font-family="monospace, sans-serif" font-size="10.5" font-weight="800" fill="${qCards[3].tagColor}" text-anchor="middle">${qCards[3].q}</text>
-    <text x="24" y="74" font-family="Segoe UI, sans-serif" font-size="17" font-weight="800" fill="#0F172A">${xmlEscape(qCards[3].item.title)}</text>
-    <text x="24" y="102" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[3].item.desc, 56)[0] || '')}</text>
-    <text x="24" y="122" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[3].item.desc, 56)[1] || '')}</text>
-    <text x="24" y="142" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(qCards[3].item.desc, 56)[2] || '')}</text>
-    <g transform="translate(24, 184)">
-      <rect width="477" height="34" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="14" y="22" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#475569">&#9656; Recommended Action: Focused Vertical Campaign Deployment</text>
-    </g>
-  </g>
+  <!-- 4 Compact Quadrant Cards (No dead white space) -->
+  ${renderQCard(qCards[0], 60, topRowY)}
+  ${renderQCard(qCards[1], 615, topRowY)}
+  ${renderQCard(qCards[2], 60, bottomRowY)}
+  ${renderQCard(qCards[3], 615, bottomRowY)}
 
   <!-- Secondary Solution Strip -->
-  <g transform="translate(60, ${cY + 536})">
-    <rect width="1080" height="124" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="30" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES EXECUTES QUADRANT ACTIVATION</text>
-    <g transform="translate(28, 46)">
+  <g transform="translate(60, ${stripY})">
+    <rect width="1080" height="${stripHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES EXECUTES QUADRANT ACTIVATION</text>
+    
+    <g transform="translate(24, 42)">
       <circle cx="10" cy="10" r="8" fill="#2563EB" />
       <path d="M7 10 L9 12 L13 8" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
-      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">1. Telemetry Signal Interception</text>
+      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">1. Telemetry Signal Interception</text>
       <text x="26" y="32" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Tracking anonymous category research and engagement surges.</text>
     </g>
-    <g transform="translate(380, 46)">
+    <g transform="translate(380, 42)">
       <circle cx="10" cy="10" r="8" fill="#2563EB" />
       <path d="M7 10 L9 12 L13 8" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
-      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">2. Account-Level Value Mapping</text>
+      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">2. Account-Level Value Mapping</text>
       <text x="26" y="32" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Reconnecting dormant pipeline with board-level business cases.</text>
     </g>
-    <g transform="translate(740, 46)">
+    <g transform="translate(740, 42)">
       <circle cx="10" cy="10" r="8" fill="#2563EB" />
       <path d="M7 10 L9 12 L13 8" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
-      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">3. Continuous Discovery Advisory</text>
+      <text x="26" y="14" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">3. Continuous Discovery Advisory</text>
       <text x="26" y="32" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Substantiating unit economics and expansion headroom.</text>
     </g>
   </g>
@@ -192,14 +159,17 @@ function renderMatrixLayout(topic, data, items) {
 // 2. LAYOUT: WATERFALL TIMELINE / DECAY CURVE
 // ─────────────────────────────────────────────────────────────────────────────
 function renderWaterfallLayout(topic, data, items) {
-  // 4 stages: height 110, spacing 122 -> ends at cY + 30 + 3 * 122 + 110 = cY + 506
-  // Solution card: height 136 -> ends at cY + 522 + 136 = cY + 658
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 658;
+  const cY = getContentStartY(data.mainQuestion);
+  const rowHeight = 88;
+  const rowSpacing = 98;
+  const stagesTop = cY + 24;
+  const stagesBottom = stagesTop + 3 * rowSpacing + rowHeight;
+  const stripY = stagesBottom + 12;
+  const stripHeight = 106;
+  const contentBottom = stripY + stripHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const stages = [
@@ -211,28 +181,28 @@ function renderWaterfallLayout(topic, data, items) {
 
   let stagesSvg = '';
   stages.forEach((st, idx) => {
-    const yPos = cY + 28 + idx * 120;
+    const yPos = stagesTop + idx * rowSpacing;
     stagesSvg += `
     <g transform="translate(60, ${yPos})">
-      <rect width="1080" height="108" rx="14" fill="#FFFFFF" stroke="${st.border}" stroke-width="1.5" filter="url(#cardShadow)" />
-      <rect x="0" y="16" width="6" height="76" rx="3" fill="${st.color}" />
+      <rect width="1080" height="${rowHeight}" rx="12" fill="#FFFFFF" stroke="${st.border}" stroke-width="1.5" filter="url(#cardShadow)" />
+      <rect x="0" y="12" width="6" height="64" rx="3" fill="${st.color}" />
       
       <!-- Time interval badge -->
-      <g transform="translate(24, 20)">
-        <rect width="150" height="28" rx="6" fill="${st.bg}" stroke="${st.border}" stroke-width="1" />
-        <text x="75" y="19" font-family="monospace, sans-serif" font-size="11.5" font-weight="800" fill="${st.color}" text-anchor="middle">${st.time}</text>
+      <g transform="translate(24, 14)">
+        <rect width="145" height="26" rx="6" fill="${st.bg}" stroke="${st.border}" stroke-width="1" />
+        <text x="72" y="18" font-family="monospace, sans-serif" font-size="11" font-weight="800" fill="${st.color}" text-anchor="middle">${st.time}</text>
       </g>
 
       <!-- Stat Highlight Box -->
-      <g transform="translate(190, 20)">
-        <rect width="150" height="28" rx="6" fill="#0F172A" />
-        <text x="75" y="19" font-family="monospace, sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">${st.stat}</text>
+      <g transform="translate(180, 14)">
+        <rect width="145" height="26" rx="6" fill="#0F172A" />
+        <text x="72" y="18" font-family="monospace, sans-serif" font-size="11.5" font-weight="900" fill="#FFFFFF" text-anchor="middle">${st.stat}</text>
       </g>
 
       <!-- Title & Explanation -->
-      <text x="360" y="38" font-family="Segoe UI, sans-serif" font-size="16" font-weight="800" fill="#0F172A">${xmlEscape(st.title)}</text>
-      <text x="360" y="66" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#475569">${xmlEscape(st.desc)}</text>
-      <text x="360" y="86" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="600" fill="${st.color}">&#9656; ${xmlEscape(items[idx]?.desc || 'Automated response protocol required.')}</text>
+      <text x="345" y="32" font-family="Segoe UI, sans-serif" font-size="15" font-weight="800" fill="#0F172A">${xmlEscape(st.title)}</text>
+      <text x="345" y="52" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(st.desc)}</text>
+      <text x="345" y="72" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="${st.color}">&#9656; ${xmlEscape(items[idx]?.desc || 'Automated response protocol required.')}</text>
     </g>
     `;
   });
@@ -246,24 +216,24 @@ function renderWaterfallLayout(topic, data, items) {
   ${stagesSvg}
 
   <!-- Lower Solution Architecture Card -->
-  <g transform="translate(60, ${cY + 520})">
-    <rect width="1080" height="136" rx="16" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="30" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES COMPRESSES LATENCY TO ZERO</text>
+  <g transform="translate(60, ${stripY})">
+    <rect width="1080" height="${stripHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES COMPRESSES LATENCY TO ZERO</text>
     
-    <g transform="translate(28, 48)">
-      <rect width="320" height="68" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1" />
-      <text x="18" y="26" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">1. Sub-60s Inbound Intake</text>
-      <text x="18" y="46" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Instant context capture before drop-off.</text>
+    <g transform="translate(24, 40)">
+      <rect width="320" height="54" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+      <text x="16" y="22" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">1. Sub-60s Inbound Intake</text>
+      <text x="16" y="40" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Instant context capture before drop-off.</text>
     </g>
-    <g transform="translate(380, 48)">
-      <rect width="320" height="68" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1" />
-      <text x="18" y="26" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">2. Autonomous Briefing Dossier</text>
-      <text x="18" y="46" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Pre-populates buying committee context.</text>
+    <g transform="translate(380, 40)">
+      <rect width="320" height="54" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+      <text x="16" y="22" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">2. Autonomous Briefing Dossier</text>
+      <text x="16" y="40" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Pre-populates buying committee context.</text>
     </g>
-    <g transform="translate(732, 48)">
-      <rect width="320" height="68" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1" />
-      <text x="18" y="26" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">3. Stage Routing Telemetry</text>
-      <text x="18" y="46" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Eliminates manual round-robin delays.</text>
+    <g transform="translate(732, 40)">
+      <rect width="320" height="54" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+      <text x="16" y="22" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#FFFFFF">3. Stage Routing Telemetry</text>
+      <text x="16" y="40" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Eliminates manual round-robin delays.</text>
     </g>
   </g>
   `;
@@ -280,12 +250,17 @@ function renderWaterfallLayout(topic, data, items) {
 // 3. LAYOUT: TIERED ARCHITECTURAL STACK
 // ─────────────────────────────────────────────────────────────────────────────
 function renderStackLayout(topic, data, items) {
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 658;
+  const cY = getContentStartY(data.mainQuestion);
+  const rowHeight = 88;
+  const rowSpacing = 98;
+  const stackTop = cY + 24;
+  const stackBottom = stackTop + 3 * rowSpacing + rowHeight;
+  const stripY = stackBottom + 12;
+  const stripHeight = 104;
+  const contentBottom = stripY + stripHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const tiers = [
@@ -297,20 +272,22 @@ function renderStackLayout(topic, data, items) {
 
   let stackSvg = '';
   tiers.forEach((tr, idx) => {
-    const yPos = cY + 28 + idx * 124;
+    const yPos = stackTop + idx * rowSpacing;
+    const isDark = tr.fill === '#0A1128';
+    const descLines = wrapSvgText(tr.desc, 78);
     stackSvg += `
     <g transform="translate(60, ${yPos})">
-      <rect width="1080" height="112" rx="14" fill="${tr.fill}" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
-      <rect x="0" y="16" width="6" height="80" rx="3" fill="${tr.accent}" />
+      <rect width="1080" height="${rowHeight}" rx="12" fill="${tr.fill}" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
+      <rect x="0" y="12" width="6" height="64" rx="3" fill="${tr.accent}" />
       
-      <g transform="translate(24, 20)">
-        <rect width="110" height="26" rx="6" fill="#1D4ED8" />
-        <text x="55" y="18" font-family="monospace, sans-serif" font-size="11" font-weight="900" fill="#FFFFFF" text-anchor="middle">${tr.num}</text>
+      <g transform="translate(24, 14)">
+        <rect width="100" height="24" rx="5" fill="#1D4ED8" />
+        <text x="50" y="17" font-family="monospace, sans-serif" font-size="10.5" font-weight="900" fill="#FFFFFF" text-anchor="middle">${tr.num}</text>
       </g>
 
-      <text x="150" y="38" font-family="Segoe UI, sans-serif" font-size="16" font-weight="800" fill="${tr.text}">${xmlEscape(tr.title)}</text>
-      <text x="150" y="66" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="${tr.fill === '#0A1128' ? '#CBD5E1' : '#334155'}">${xmlEscape(wrapSvgText(tr.desc, 78)[0] || '')}</text>
-      <text x="150" y="86" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="${tr.fill === '#0A1128' ? '#CBD5E1' : '#334155'}">${xmlEscape(wrapSvgText(tr.desc, 78)[1] || '')}</text>
+      <text x="140" y="32" font-family="Segoe UI, sans-serif" font-size="15.5" font-weight="800" fill="${tr.text}">${xmlEscape(tr.title)}</text>
+      <text x="140" y="52" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="${isDark ? '#CBD5E1' : '#475569'}">${xmlEscape(descLines[0] || '')}</text>
+      <text x="140" y="70" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="${isDark ? '#CBD5E1' : '#475569'}">${xmlEscape(descLines[1] || '')}</text>
     </g>
     `;
   });
@@ -323,13 +300,13 @@ function renderStackLayout(topic, data, items) {
 
   ${stackSvg}
 
-  <g transform="translate(60, ${cY + 538})">
-    <rect width="1080" height="118" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="32" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">PROFITMACHINES MULTI-TIER PRECISION CONTROLS</text>
-    <text x="28" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Automated ICP Scoring Across Tiers</text>
-    <text x="400" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Continuous Intent Telemetry</text>
-    <text x="760" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Unit Economic Margin Safeguards</text>
-    <text x="28" y="90" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Replaces one-dimensional superficial list-buying with deep commercial predictability.</text>
+  <g transform="translate(60, ${stripY})">
+    <rect width="1080" height="${stripHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">PROFITMACHINES MULTI-TIER PRECISION CONTROLS</text>
+    <text x="24" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Automated ICP Scoring Across Tiers</text>
+    <text x="390" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Continuous Intent Telemetry</text>
+    <text x="740" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Unit Economic Margin Safeguards</text>
+    <text x="24" y="80" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Replaces one-dimensional superficial list-buying with deep commercial predictability.</text>
   </g>
   `;
 
@@ -345,12 +322,17 @@ function renderStackLayout(topic, data, items) {
 // 4. LAYOUT: COMPARATIVE SCORECARD (TWO-COLUMN)
 // ─────────────────────────────────────────────────────────────────────────────
 function renderScorecardLayout(topic, data, items) {
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 668;
+  const cY = getContentStartY(data.mainQuestion);
+  const rowHeight = 76;
+  const rowSpacing = 86;
+  const colTop = cY + 20;
+  const colHeight = 52 + 3 * rowSpacing + rowHeight;
+  const summaryY = colTop + colHeight + 14;
+  const summaryHeight = 76;
+  const contentBottom = summaryY + summaryHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const leftItems = [
@@ -369,30 +351,32 @@ function renderScorecardLayout(topic, data, items) {
 
   let leftRows = '';
   leftItems.forEach((it, i) => {
-    const y = 74 + i * 114;
+    const y = 48 + i * rowSpacing;
+    const descLines = wrapSvgText(it.desc, 50);
     leftRows += `
-    <g transform="translate(20, ${y})">
-      <rect width="485" height="100" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1" />
-      <circle cx="24" cy="24" r="10" fill="#FEE2E2" />
-      <text x="24" y="28" font-family="sans-serif" font-size="12" font-weight="900" fill="#DC2626" text-anchor="middle">&#10005;</text>
-      <text x="44" y="28" font-family="Segoe UI, sans-serif" font-size="14.5" font-weight="800" fill="#991B1B">${xmlEscape(it.title)}</text>
-      <text x="20" y="56" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(wrapSvgText(it.desc, 50)[0] || '')}</text>
-      <text x="20" y="74" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(wrapSvgText(it.desc, 50)[1] || '')}</text>
+    <g transform="translate(18, ${y})">
+      <rect width="489" height="${rowHeight}" rx="10" fill="#FFFFFF" stroke="#FECACA" stroke-width="1" />
+      <circle cx="20" cy="20" r="9" fill="#FEE2E2" />
+      <text x="20" y="24" font-family="sans-serif" font-size="11" font-weight="900" fill="#DC2626" text-anchor="middle">&#10005;</text>
+      <text x="38" y="24" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#991B1B">${xmlEscape(it.title)}</text>
+      <text x="18" y="46" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#475569">${xmlEscape(descLines[0] || '')}</text>
+      <text x="18" y="62" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#475569">${xmlEscape(descLines[1] || '')}</text>
     </g>
     `;
   });
 
   let rightRows = '';
   rightItems.forEach((it, i) => {
-    const y = 74 + i * 114;
+    const y = 48 + i * rowSpacing;
+    const descLines = wrapSvgText(it.desc, 50);
     rightRows += `
-    <g transform="translate(20, ${y})">
-      <rect width="485" height="100" rx="10" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
-      <circle cx="24" cy="24" r="10" fill="#EFF6FF" />
-      <text x="24" y="28" font-family="sans-serif" font-size="12" font-weight="900" fill="#2563EB" text-anchor="middle">&#10003;</text>
-      <text x="44" y="28" font-family="Segoe UI, sans-serif" font-size="14.5" font-weight="800" fill="#1E40AF">${xmlEscape(it.title)}</text>
-      <text x="20" y="56" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(it.desc, 50)[0] || '')}</text>
-      <text x="20" y="74" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(it.desc, 50)[1] || '')}</text>
+    <g transform="translate(18, ${y})">
+      <rect width="489" height="${rowHeight}" rx="10" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+      <circle cx="20" cy="20" r="9" fill="#EFF6FF" />
+      <text x="20" y="24" font-family="sans-serif" font-size="11" font-weight="900" fill="#2563EB" text-anchor="middle">&#10003;</text>
+      <text x="38" y="24" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#1E40AF">${xmlEscape(it.title)}</text>
+      <text x="18" y="46" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(descLines[0] || '')}</text>
+      <text x="18" y="62" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(descLines[1] || '')}</text>
     </g>
     `;
   });
@@ -404,28 +388,28 @@ function renderScorecardLayout(topic, data, items) {
   </g>
 
   <!-- Left Column -->
-  <g transform="translate(60, ${cY + 20})">
-    <rect width="525" height="548" rx="16" fill="#FFF5F5" stroke="#FECACA" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect width="525" height="52" rx="16" fill="#FEE2E2" />
-    <rect x="0" y="36" width="525" height="16" fill="#FEE2E2" />
-    <text x="24" y="32" font-family="Segoe UI, sans-serif" font-size="13" font-weight="900" fill="#991B1B" letter-spacing="1">TRADITIONAL / FLAWED GTM MOTION</text>
+  <g transform="translate(60, ${colTop})">
+    <rect width="525" height="${colHeight}" rx="14" fill="#FFF5F5" stroke="#FECACA" stroke-width="1.5" filter="url(#cardShadow)" />
+    <rect width="525" height="42" rx="14" fill="#FEE2E2" />
+    <rect x="0" y="28" width="525" height="14" fill="#FEE2E2" />
+    <text x="20" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="900" fill="#991B1B" letter-spacing="1">TRADITIONAL / FLAWED GTM MOTION</text>
     ${leftRows}
   </g>
 
   <!-- Right Column -->
-  <g transform="translate(615, ${cY + 20})">
-    <rect width="525" height="548" rx="16" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#cardShadow)" />
-    <rect width="525" height="52" rx="16" fill="#DBEAFE" />
-    <rect x="0" y="36" width="525" height="16" fill="#DBEAFE" />
-    <text x="24" y="32" font-family="Segoe UI, sans-serif" font-size="13" font-weight="900" fill="#1E40AF" letter-spacing="1">PROFITMACHINES AI-NATIVE REVENUE ENGINE</text>
+  <g transform="translate(615, ${colTop})">
+    <rect width="525" height="${colHeight}" rx="14" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#cardShadow)" />
+    <rect width="525" height="42" rx="14" fill="#DBEAFE" />
+    <rect x="0" y="28" width="525" height="14" fill="#DBEAFE" />
+    <text x="20" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="900" fill="#1E40AF" letter-spacing="1">PROFITMACHINES AI-NATIVE REVENUE ENGINE</text>
     ${rightRows}
   </g>
 
   <!-- Summary Yield Bar -->
-  <g transform="translate(60, ${cY + 584})">
-    <rect width="1080" height="84" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="30" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">COMMERCIAL IMPACT &amp; NET OUTCOME</text>
-    <text x="28" y="56" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">&#9656; Win Rate Lift: +42% &#8226; Sales Cycle: Compressed 34 Days &#8226; CAC Payback: Reduced by 38%</text>
+  <g transform="translate(60, ${summaryY})">
+    <rect width="1080" height="${summaryHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="800" fill="#93C5FD" letter-spacing="1">COMMERCIAL IMPACT &amp; NET OUTCOME</text>
+    <text x="24" y="50" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="700" fill="#FFFFFF">&#9656; Win Rate Lift: +42% &#8226; Sales Cycle: Compressed 34 Days &#8226; CAC Payback: Reduced by 38%</text>
   </g>
   `;
 
@@ -441,12 +425,17 @@ function renderScorecardLayout(topic, data, items) {
 // 5. LAYOUT: FUNNEL DIAGNOSTIC
 // ─────────────────────────────────────────────────────────────────────────────
 function renderFunnelLayout(topic, data, items) {
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 658;
+  const cY = getContentStartY(data.mainQuestion);
+  const rowHeight = 88;
+  const rowSpacing = 98;
+  const stagesTop = cY + 24;
+  const stagesBottom = stagesTop + 3 * rowSpacing + rowHeight;
+  const stripY = stagesBottom + 12;
+  const stripHeight = 104;
+  const contentBottom = stripY + stripHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const funnelStages = [
@@ -458,21 +447,21 @@ function renderFunnelLayout(topic, data, items) {
 
   let stagesSvg = '';
   funnelStages.forEach((st, i) => {
-    const y = cY + 28 + i * 124;
+    const y = stagesTop + i * rowSpacing;
     const isDark = st.fill === '#0A1128';
     stagesSvg += `
     <g transform="translate(${st.x}, ${y})">
-      <rect width="${st.width}" height="110" rx="14" fill="${st.fill}" stroke="${st.border}" stroke-width="1.5" filter="url(#cardShadow)" />
+      <rect width="${st.width}" height="${rowHeight}" rx="12" fill="${st.fill}" stroke="${st.border}" stroke-width="1.5" filter="url(#cardShadow)" />
       
-      <text x="24" y="34" font-family="Segoe UI, sans-serif" font-size="15" font-weight="900" fill="${isDark ? '#93C5FD' : '#0F172A'}">${xmlEscape(st.name)}</text>
+      <text x="24" y="28" font-family="Segoe UI, sans-serif" font-size="14" font-weight="900" fill="${isDark ? '#93C5FD' : '#0F172A'}">${xmlEscape(st.name)}</text>
       
-      <g transform="translate(${st.width - 170}, 16)">
-        <rect width="146" height="28" rx="6" fill="${isDark ? '#1E40AF' : '#FEE2E2'}" />
-        <text x="73" y="19" font-family="monospace, sans-serif" font-size="11" font-weight="900" fill="${isDark ? '#FFFFFF' : '#DC2626'}" text-anchor="middle">${st.drop}</text>
+      <g transform="translate(${st.width - 156}, 12)">
+        <rect width="136" height="24" rx="5" fill="${isDark ? '#1E40AF' : '#FEE2E2'}" />
+        <text x="68" y="16" font-family="monospace, sans-serif" font-size="10.5" font-weight="900" fill="${isDark ? '#FFFFFF' : '#DC2626'}" text-anchor="middle">${st.drop}</text>
       </g>
 
-      <text x="24" y="68" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="700" fill="${isDark ? '#FFFFFF' : '#1D4ED8'}">&#10003; Diagnostic Fix: ${xmlEscape(st.fix)}</text>
-      <text x="24" y="90" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="${isDark ? '#94A3B8' : '#475569'}">${xmlEscape(items[i]?.desc || 'Continuous stage-by-stage progression telemetry.')}</text>
+      <text x="24" y="52" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="${isDark ? '#FFFFFF' : '#1D4ED8'}">&#10003; Diagnostic Fix: ${xmlEscape(st.fix)}</text>
+      <text x="24" y="72" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="${isDark ? '#94A3B8' : '#475569'}">${xmlEscape(items[i]?.desc || 'Continuous stage-by-stage progression telemetry.')}</text>
     </g>
     `;
   });
@@ -485,11 +474,11 @@ function renderFunnelLayout(topic, data, items) {
 
   ${stagesSvg}
 
-  <g transform="translate(60, ${cY + 538})">
-    <rect width="1080" height="118" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="32" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES PLUGS STAGE LEAKAGE</text>
-    <text x="28" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#9656; Objective qualification criteria replace subjective sales rep confidence.</text>
-    <text x="28" y="88" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Telemetry triggers executive intervention before opportunities enter terminal sales stall.</text>
+  <g transform="translate(60, ${stripY})">
+    <rect width="1080" height="${stripHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">HOW PROFITMACHINES PLUGS STAGE LEAKAGE</text>
+    <text x="24" y="52" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#9656; Objective qualification criteria replace subjective sales rep confidence.</text>
+    <text x="24" y="76" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Telemetry triggers executive intervention before opportunities enter terminal sales stall.</text>
   </g>
   `;
 
@@ -505,12 +494,17 @@ function renderFunnelLayout(topic, data, items) {
 // 6. LAYOUT: TELEMETRY DASHBOARD
 // ─────────────────────────────────────────────────────────────────────────────
 function renderDashboardLayout(topic, data, items) {
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 668;
+  const cY = getContentStartY(data.mainQuestion);
+  const statY = cY + 24;
+  const statHeight = 108;
+  const streamY = statY + statHeight + 12;
+  const streamHeight = 264;
+  const takeawayY = streamY + streamHeight + 12;
+  const takeawayHeight = 104;
+  const contentBottom = takeawayY + takeawayHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   const contentSvg = `
@@ -521,71 +515,70 @@ function renderDashboardLayout(topic, data, items) {
   </g>
 
   <!-- 3 Big Metric Stat Cards -->
-  <g transform="translate(60, ${cY + 24})">
-    <rect width="346" height="136" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="20" y="30" font-family="monospace, sans-serif" font-size="11" font-weight="700" fill="#94A3B8">PIPELINE VELOCITY INDEX</text>
-    <text x="20" y="74" font-family="monospace, sans-serif" font-size="34" font-weight="900" fill="#60A5FA">3.8x</text>
-    <rect x="20" y="90" width="100" height="22" rx="4" fill="#1E3A8A" />
-    <text x="70" y="105" font-family="monospace, sans-serif" font-size="10" font-weight="800" fill="#93C5FD" text-anchor="middle">+42% YoY Lift</text>
+  <g transform="translate(60, ${statY})">
+    <rect width="346" height="${statHeight}" rx="12" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="20" y="26" font-family="monospace, sans-serif" font-size="10.5" font-weight="700" fill="#94A3B8">PIPELINE VELOCITY INDEX</text>
+    <text x="20" y="62" font-family="monospace, sans-serif" font-size="30" font-weight="900" fill="#60A5FA">3.8x</text>
+    <rect x="20" y="74" width="96" height="20" rx="4" fill="#1E3A8A" />
+    <text x="68" y="88" font-family="monospace, sans-serif" font-size="9.5" font-weight="800" fill="#93C5FD" text-anchor="middle">+42% YoY Lift</text>
   </g>
 
-  <g transform="translate(426, ${cY + 24})">
-    <rect width="346" height="136" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="20" y="30" font-family="monospace, sans-serif" font-size="11" font-weight="700" fill="#94A3B8">FORECAST ACCURACY BAND</text>
-    <text x="20" y="74" font-family="monospace, sans-serif" font-size="34" font-weight="900" fill="#34D399">94.6%</text>
-    <rect x="20" y="90" width="100" height="22" rx="4" fill="#064E3B" />
-    <text x="70" y="105" font-family="monospace, sans-serif" font-size="10" font-weight="800" fill="#A7F3D0" text-anchor="middle">&#177;3% Tolerance</text>
+  <g transform="translate(426, ${statY})">
+    <rect width="346" height="${statHeight}" rx="12" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="20" y="26" font-family="monospace, sans-serif" font-size="10.5" font-weight="700" fill="#94A3B8">FORECAST ACCURACY BAND</text>
+    <text x="20" y="62" font-family="monospace, sans-serif" font-size="30" font-weight="900" fill="#34D399">94.6%</text>
+    <rect x="20" y="74" width="96" height="20" rx="4" fill="#064E3B" />
+    <text x="68" y="88" font-family="monospace, sans-serif" font-size="9.5" font-weight="800" fill="#A7F3D0" text-anchor="middle">&#177;3% Tolerance</text>
   </g>
 
-  <g transform="translate(794, ${cY + 24})">
-    <rect width="346" height="136" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="20" y="30" font-family="monospace, sans-serif" font-size="11" font-weight="700" fill="#94A3B8">SALES CYCLE DURATION</text>
-    <text x="20" y="74" font-family="monospace, sans-serif" font-size="34" font-weight="900" fill="#FBBF24">42 Days</text>
-    <rect x="20" y="90" width="100" height="22" rx="4" fill="#78350F" />
-    <text x="70" y="105" font-family="monospace, sans-serif" font-size="10" font-weight="800" fill="#FDE68A" text-anchor="middle">-34 Days Saved</text>
+  <g transform="translate(794, ${statY})">
+    <rect width="346" height="${statHeight}" rx="12" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="20" y="26" font-family="monospace, sans-serif" font-size="10.5" font-weight="700" fill="#94A3B8">SALES CYCLE DURATION</text>
+    <text x="20" y="62" font-family="monospace, sans-serif" font-size="30" font-weight="900" fill="#FBBF24">42 Days</text>
+    <rect x="20" y="74" width="96" height="20" rx="4" fill="#78350F" />
+    <text x="68" y="88" font-family="monospace, sans-serif" font-size="9.5" font-weight="800" fill="#FDE68A" text-anchor="middle">-34 Days Saved</text>
   </g>
 
   <!-- 4 Telemetry Data Streams -->
-  <g transform="translate(60, ${cY + 176})">
-    <rect width="1080" height="344" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
-    
-    <text x="28" y="36" font-family="Segoe UI, sans-serif" font-size="14" font-weight="800" fill="#0F172A">FOUR CRITICAL REAL-TIME REVENUE SIGNALS</text>
+  <g transform="translate(60, ${streamY})">
+    <rect width="1080" height="${streamHeight}" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="28" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#0F172A">FOUR CRITICAL REAL-TIME REVENUE SIGNALS</text>
 
     <!-- Stream 1 -->
-    <g transform="translate(28, 54)">
-      <rect width="1024" height="60" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="20" y="34" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#1D4ED8">&#9656; Inbound Conversion Stream:</text>
-      <text x="240" y="34" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(items[0]?.desc || 'Continuous tracking of speed-to-lead across tiers.')}</text>
+    <g transform="translate(20, 42)">
+      <rect width="1040" height="46" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+      <text x="16" y="27" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#1D4ED8">&#9656; Inbound Conversion Stream:</text>
+      <text x="230" y="27" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(items[0]?.desc || 'Continuous tracking of speed-to-lead across tiers.')}</text>
     </g>
 
     <!-- Stream 2 -->
-    <g transform="translate(28, 122)">
-      <rect width="1024" height="60" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="20" y="34" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#1D4ED8">&#9656; Pipeline Stage Friction Stream:</text>
-      <text x="240" y="34" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(items[1]?.desc || 'Automated detection of deals stalled over 14 days.')}</text>
+    <g transform="translate(20, 96)">
+      <rect width="1040" height="46" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+      <text x="16" y="27" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#1D4ED8">&#9656; Pipeline Stage Friction Stream:</text>
+      <text x="230" y="27" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(items[1]?.desc || 'Automated detection of deals stalled over 14 days.')}</text>
     </g>
 
     <!-- Stream 3 -->
-    <g transform="translate(28, 190)">
-      <rect width="1024" height="60" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="20" y="34" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#1D4ED8">&#9656; Commercial Margin Health Stream:</text>
-      <text x="240" y="34" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(items[2]?.desc || 'Real-time discount threshold monitoring.')}</text>
+    <g transform="translate(20, 150)">
+      <rect width="1040" height="46" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+      <text x="16" y="27" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#1D4ED8">&#9656; Commercial Margin Health Stream:</text>
+      <text x="230" y="27" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(items[2]?.desc || 'Real-time discount threshold monitoring.')}</text>
     </g>
 
     <!-- Stream 4 -->
-    <g transform="translate(28, 258)">
-      <rect width="1024" height="60" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
-      <text x="20" y="34" font-family="Segoe UI, sans-serif" font-size="13.5" font-weight="800" fill="#1D4ED8">&#9656; Executive Decision Intent Stream:</text>
-      <text x="240" y="34" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#334155">${xmlEscape(items[3]?.desc || 'Multi-stakeholder engagement scoring.')}</text>
+    <g transform="translate(20, 204)">
+      <rect width="1040" height="46" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+      <text x="16" y="27" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="800" fill="#1D4ED8">&#9656; Executive Decision Intent Stream:</text>
+      <text x="230" y="27" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#334155">${xmlEscape(items[3]?.desc || 'Multi-stakeholder engagement scoring.')}</text>
     </g>
   </g>
 
   <!-- Lower Takeaway -->
-  <g transform="translate(60, ${cY + 536})">
-    <rect width="1080" height="130" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="32" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">EXECUTIVE TELEMETRY GOVERNANCE</text>
-    <text x="28" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#9656; ProfitMachines connects data islands into unified board-level commercial visibility.</text>
-    <text x="28" y="88" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Replaces lagging CRM spreadsheet reviews with live mathematical revenue steering.</text>
+  <g transform="translate(60, ${takeawayY})">
+    <rect width="1080" height="${takeawayHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">EXECUTIVE TELEMETRY GOVERNANCE</text>
+    <text x="24" y="52" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#9656; ProfitMachines connects data islands into unified board-level commercial visibility.</text>
+    <text x="24" y="76" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Replaces lagging CRM spreadsheet reviews with live mathematical revenue steering.</text>
   </g>
   `;
 
@@ -601,30 +594,36 @@ function renderDashboardLayout(topic, data, items) {
 // 7. LAYOUT: BLUEPRINT MODULAR
 // ─────────────────────────────────────────────────────────────────────────────
 function renderBlueprintLayout(topic, data, items) {
-  const curYEstimate = 250;
-  const cY = curYEstimate + 24;
-  const contentBottom = cY + 658;
+  const cY = getContentStartY(data.mainQuestion);
+  const rowHeight = 88;
+  const rowSpacing = 98;
+  const modulesTop = cY + 24;
+  const modulesBottom = modulesTop + 3 * rowSpacing + rowHeight;
+  const stripY = modulesBottom + 12;
+  const stripHeight = 104;
+  const contentBottom = stripY + stripHeight;
   const totalHeight = contentBottom + 20 + 82 + 50;
 
-  const { curY, svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
+  const { svg: headerSvg } = renderSvgHeader(topic, data.idFormatted, data.category, data.eyebrowTags, data.mainQuestion, data.highlightWord, data.subtitle, totalHeight);
   const footerSvg = renderSvgFooter(topic, data.ctaHeadline, data.ctaSubtext, data.ctaButtonText, data.footerUrl, data.footerTags, contentBottom);
 
   let modulesSvg = '';
   items.slice(0, 4).forEach((it, idx) => {
-    const y = cY + 28 + idx * 124;
+    const y = modulesTop + idx * rowSpacing;
+    const descLines = wrapSvgText(it.desc, 76);
     modulesSvg += `
     <g transform="translate(60, ${y})">
-      <rect width="1080" height="112" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
-      <rect x="0" y="16" width="6" height="80" rx="3" fill="#2563EB" />
+      <rect width="1080" height="${rowHeight}" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#cardShadow)" />
+      <rect x="0" y="12" width="6" height="64" rx="3" fill="#2563EB" />
       
-      <g transform="translate(24, 20)">
-        <rect width="120" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
-        <text x="60" y="18" font-family="monospace, sans-serif" font-size="11" font-weight="900" fill="#1D4ED8" text-anchor="middle">MODULE 0${idx + 1}</text>
+      <g transform="translate(24, 14)">
+        <rect width="105" height="24" rx="5" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
+        <text x="52" y="17" font-family="monospace, sans-serif" font-size="10.5" font-weight="900" fill="#1D4ED8" text-anchor="middle">MODULE 0${idx + 1}</text>
       </g>
 
-      <text x="164" y="38" font-family="Segoe UI, sans-serif" font-size="16" font-weight="800" fill="#0F172A">${xmlEscape(it.title)}</text>
-      <text x="164" y="66" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(it.desc, 76)[0] || '')}</text>
-      <text x="164" y="86" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="500" fill="#334155">${xmlEscape(wrapSvgText(it.desc, 76)[1] || '')}</text>
+      <text x="145" y="32" font-family="Segoe UI, sans-serif" font-size="15.5" font-weight="800" fill="#0F172A">${xmlEscape(it.title)}</text>
+      <text x="145" y="52" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(descLines[0] || '')}</text>
+      <text x="145" y="70" font-family="Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#475569">${xmlEscape(descLines[1] || '')}</text>
     </g>
     `;
   });
@@ -637,13 +636,13 @@ function renderBlueprintLayout(topic, data, items) {
 
   ${modulesSvg}
 
-  <g transform="translate(60, ${cY + 538})">
-    <rect width="1080" height="118" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
-    <text x="28" y="32" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">PROFITMACHINES DISCIPLINED EXECUTION CONTROLS</text>
-    <text x="28" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Standardized Milestone Governance</text>
-    <text x="400" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Continuous Verification Audits</text>
-    <text x="760" y="62" font-family="Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">&#10003; Measurable ROI Tracking</text>
-    <text x="28" y="90" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Engineered for commercial leaders scaling predictable revenue engines.</text>
+  <g transform="translate(60, ${stripY})">
+    <rect width="1080" height="${stripHeight}" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)" />
+    <text x="24" y="26" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#93C5FD" letter-spacing="1">PROFITMACHINES DISCIPLINED EXECUTION CONTROLS</text>
+    <text x="24" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Standardized Milestone Governance</text>
+    <text x="390" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Continuous Verification Audits</text>
+    <text x="740" y="54" font-family="Segoe UI, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF">&#10003; Measurable ROI Tracking</text>
+    <text x="24" y="80" font-family="Segoe UI, sans-serif" font-size="11" font-weight="500" fill="#94A3B8">Engineered for commercial leaders scaling predictable revenue engines.</text>
   </g>
   `;
 
