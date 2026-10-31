@@ -1,0 +1,601 @@
+/* ==========================================================================
+   ProfitMachines LinkedIn Content Library - Brand Stylesheet
+   Design System: Enterprise B2B Clean Tech / AI-Native Commercial Architecture
+   Palette: Slate #0F172A, Tech Blue #2563EB, Royal #1D4ED8, Emerald #059669
+   ========================================================================== */
+
+:root {
+  --pm-bg-page: #F8FAFC;
+  --pm-bg-card: #FFFFFF;
+  --pm-bg-card-subtle: #F1F5F9;
+  --pm-bg-dark: #0B132B;
+  --pm-bg-dark-surface: #1E293B;
+
+  --pm-border: #E2E8F0;
+  --pm-border-hover: #CBD5E1;
+  --pm-border-dark: #334155;
+
+  --pm-text-heading: #0F172A;
+  --pm-text-body: #334155;
+  --pm-text-secondary: #475569;
+  --pm-text-muted: #64748B;
+  --pm-text-inverse: #FFFFFF;
+
+  --pm-blue-primary: #2563EB;
+  --pm-blue-hover: #1D4ED8;
+  --pm-blue-light: #EFF6FF;
+  --pm-blue-border: #BFDBFE;
+
+  --pm-emerald-primary: #059669;
+  --pm-emerald-light: #ECFDF5;
+  --pm-emerald-border: #A7F3D0;
+
+  --pm-purple-primary: #7C3AED;
+  --pm-purple-light: #F5F3FF;
+  --pm-purple-border: #DDD6FE;
+
+  --pm-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --pm-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --pm-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --pm-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+
+  --pm-radius-sm: 6px;
+  --pm-radius-md: 10px;
+  --pm-radius-lg: 16px;
+  --pm-radius-xl: 24px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--pm-bg-page);
+  color: var(--pm-text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Page Layout & Container
+   ========================================================================== */
+
+.pm-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem 1.5rem;
+}
+
+/* Top Navigation Bar */
+.pm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-lg);
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-sm);
+}
+
+.pm-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--pm-text-heading);
+}
+
+.pm-brand-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0F172A;
+}
+
+.pm-brand-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.pm-brand-title span {
+  color: var(--pm-blue-primary);
+}
+
+.pm-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--pm-radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.pm-btn-primary {
+  background-color: var(--pm-blue-primary);
+  color: #FFFFFF;
+}
+
+.pm-btn-primary:hover {
+  background-color: var(--pm-blue-hover);
+}
+
+.pm-btn-secondary {
+  background-color: #FFFFFF;
+  color: var(--pm-text-heading);
+  border-color: var(--pm-border);
+}
+
+.pm-btn-secondary:hover {
+  background-color: var(--pm-bg-card-subtle);
+  border-color: var(--pm-border-hover);
+}
+
+.pm-btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Header & Meta Information
+   ========================================================================== */
+
+.pm-header-card {
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-xl);
+  padding: 2.25rem 2.25rem 1.75rem 2.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-sm);
+}
+
+.pm-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.pm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+}
+
+.pm-pill-id {
+  background-color: #0F172A;
+  color: #FFFFFF;
+}
+
+.pm-pill-category {
+  background-color: var(--pm-blue-light);
+  color: var(--pm-blue-primary);
+  border: 1px solid var(--pm-blue-border);
+}
+
+.pm-pill-format {
+  background-color: var(--pm-emerald-light);
+  color: var(--pm-emerald-primary);
+  border: 1px solid var(--pm-emerald-border);
+}
+
+.pm-pill-text {
+  background-color: var(--pm-purple-light);
+  color: var(--pm-purple-primary);
+  border: 1px solid var(--pm-purple-border);
+}
+
+.pm-post-title {
+  font-size: 1.85rem;
+  line-height: 1.25;
+  font-weight: 800;
+  color: var(--pm-text-heading);
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.pm-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pm-border);
+  font-size: 0.875rem;
+}
+
+.pm-meta-item strong {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pm-text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.pm-meta-item span {
+  color: var(--pm-text-heading);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Visual Framework Image Section (Single Image Posts)
+   ========================================================================== */
+
+.pm-visual-section {
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-xl);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-md);
+}
+
+.pm-visual-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #FAFAFC;
+  border-bottom: 1px solid var(--pm-border);
+}
+
+.pm-visual-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pm-text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pm-image-wrapper {
+  background: #0B132B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.pm-post-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--pm-radius-md);
+  box-shadow: var(--pm-shadow-lg);
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.pm-visual-specs {
+  padding: 1.5rem 1.75rem;
+  background: #FAFAFC;
+  border-top: 1px solid var(--pm-border);
+}
+
+.pm-spec-row {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.pm-spec-row:last-child {
+  margin-bottom: 0;
+}
+
+.pm-spec-row strong {
+  color: var(--pm-text-heading);
+  font-weight: 700;
+  display: inline-block;
+  min-width: 140px;
+}
+
+.pm-text-graphic-box {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-left: 3px solid var(--pm-blue-primary);
+  border-radius: var(--pm-radius-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--pm-text-body);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   Executive Hook Section (Text-Only Posts)
+   ========================================================================== */
+
+.pm-hook-card {
+  background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
+  border: 1px solid var(--pm-blue-border);
+  border-left: 4px solid var(--pm-blue-primary);
+  border-radius: var(--pm-radius-lg);
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-sm);
+}
+
+.pm-hook-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pm-blue-primary);
+  margin-bottom: 0.5rem;
+}
+
+.pm-hook-quote {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--pm-text-heading);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.pm-hook-takeaway {
+  font-size: 0.925rem;
+  color: var(--pm-text-secondary);
+}
+
+.pm-hook-takeaway strong {
+  color: var(--pm-text-heading);
+}
+
+/* ==========================================================================
+   Complete LinkedIn Post Simulation Frame
+   ========================================================================== */
+
+.pm-post-sim {
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-xl);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-md);
+}
+
+.pm-sim-header {
+  padding: 1.25rem 1.75rem;
+  background: #FAFAFC;
+  border-bottom: 1px solid var(--pm-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pm-sim-author {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.pm-sim-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.pm-sim-meta h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--pm-text-heading);
+  line-height: 1.2;
+}
+
+.pm-sim-meta p {
+  font-size: 0.8rem;
+  color: var(--pm-text-muted);
+}
+
+.pm-post-body {
+  padding: 2rem 2.25rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #1E293B;
+}
+
+.pm-post-body p {
+  margin-bottom: 1.25rem;
+}
+
+.pm-post-body p:last-child {
+  margin-bottom: 0;
+}
+
+.pm-post-body ul, .pm-post-body ol {
+  margin: 0 0 1.25rem 1.5rem;
+}
+
+.pm-post-body li {
+  margin-bottom: 0.5rem;
+}
+
+.pm-post-body li:last-child {
+  margin-bottom: 0;
+}
+
+.pm-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pm-border);
+}
+
+.pm-hashtag-pill {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--pm-blue-primary);
+  background: var(--pm-blue-light);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Call to Action Banner
+   ========================================================================== */
+
+.pm-cta-card {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  border-radius: var(--pm-radius-lg);
+  padding: 1.75rem 2.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--pm-shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pm-cta-content h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #60A5FA;
+  margin-bottom: 0.4rem;
+}
+
+.pm-cta-content p {
+  font-size: 0.95rem;
+  color: #E2E8F0;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Compliance & Verification Box
+   ========================================================================== */
+
+.pm-compliance-card {
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-lg);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.pm-compliance-card h4 {
+  font-size: 0.825rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pm-text-muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pm-compliance-item {
+  font-size: 0.85rem;
+  color: var(--pm-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.pm-compliance-item:last-child {
+  margin-bottom: 0;
+}
+
+.pm-compliance-item strong {
+  color: var(--pm-text-heading);
+}
+
+/* ==========================================================================
+   Pagination & Navigation Footer
+   ========================================================================== */
+
+.pm-nav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius-lg);
+  padding: 1.25rem 1.75rem;
+  box-shadow: var(--pm-shadow-sm);
+  gap: 1rem;
+}
+
+/* Toast message for copy */
+.pm-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--pm-radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: var(--pm-shadow-xl);
+  display: none;
+  z-index: 9999;
+  animation: pmFadeIn 0.2s ease forwards;
+}
+
+@keyframes pmFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .pm-container {
+    padding: 1rem 1rem 4rem 1rem;
+  }
+  .pm-header-card, .pm-post-body, .pm-cta-card {
+    padding: 1.5rem;
+  }
+  .pm-post-title {
+    font-size: 1.45rem;
+  }
+  .pm-cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pm-nav-footer {
+    flex-direction: column;
+  }
+}
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProfitMachines — 100 LinkedIn Templates Browser Preview Gallery</title>
+  <link rel="stylesheet" href="assets/brand/template.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+
+  <div class="gallery-container">
+
+    <!-- Gallery Header -->
+    <header class="gallery-header">
+      <div class="gallery-brand-row">
+        <div class="gallery-brand-info">
+          <img src="assets/brand/brand-icon.png" alt="PM" class="gallery-logo" onerror="this.style.display='none'">
+          <div class="gallery-title">
+            <h1>Profit<span>Machines</span> LinkedIn Templates Gallery</h1>
+            <p>100 Enterprise B2B Thought Leadership &amp; Visual Framework Posts</p>
+          </div>
+        </div>
+
+        <div class="gallery-stats">
+          <span class="stat-badge primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            100 Total Posts
+          </span>
+          <span class="stat-badge success">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            60 Single-Image Posts
+          </span>
+          <span class="stat-badge purple">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            40 Text-Only Posts
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Controls Card: Search, Formats & Category Filter Chips -->
+    <section class="controls-card">
+      <div class="search-row">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by topic number (#001), title, audience, or keyword..." autocomplete="off">
+        </div>
+
+        <div class="format-filter-group">
+          <button class="format-btn active" data-format="all">All Formats (100)</button>
+          <button class="format-btn" data-format="single-image">Single Image (60)</button>
+          <button class="format-btn" data-format="text-only">Text Only (40)</button>
+        </div>
+      </div>
+
+      <!-- Categories Pills -->
+      <div class="categories-bar" id="categoryFilters">
+        <!-- Rendered dynamically by preview.js -->
+      </div>
+    </section>
+
+    <!-- Results Meta -->
+    <div class="results-meta-bar">
+      <span id="resultsCount">Loading templates...</span>
+      <span>Click any card to read full post copy or inspect image framework</span>
+    </div>
+
+    <!-- Post Grid -->
+    <main class="post-grid" id="postGrid">
+      <!-- Rendered dynamically by preview.js -->
+    </main>
+
+  </div>
+
+  <!-- Detailed Modal Slide-over -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <span style="font-weight:700; color:var(--pm-text-heading); font-size:0.95rem;">Template Inspection</span>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" title="Close (Esc)">&times;</button>
+      </div>
+
+      <div class="modal-content-scroll" id="modalContent">
+        <!-- Injected via preview.js -->
+      </div>
+
+      <div class="modal-footer">
+        <div style="display:flex; gap:0.5rem;">
+          <button class="pm-btn pm-btn-secondary pm-btn-sm" id="modalPrevBtn">&larr; Previous Topic</button>
+          <button class="pm-btn pm-btn-secondary pm-btn-sm" id="modalNextBtn">Next Topic &rarr;</button>
+        </div>
+        <button class="pm-btn pm-btn-secondary pm-btn-sm" onclick="window.previewApp.closeModal()">Close Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Toast -->
+  <div class="toast-bubble" id="toastBubble">Copied to clipboard!</div>
+
+  <!-- Load Data and Application Logic -->
+  <script src="preview-data.js"></script>
+  <script src="preview.js"></script>
+</body>
+</html>
+

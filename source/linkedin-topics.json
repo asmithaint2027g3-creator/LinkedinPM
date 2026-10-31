@@ -1,0 +1,1002 @@
+[
+  {
+    "id": 1,
+    "title": "Identifying hidden pipeline opportunities",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Demand Discovery & ICP",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how businesses can identify missed demand, neglected accounts, and underserved market segments. Give readers a practical way to evaluate where pipeline growth could come from.",
+    "outputFile": "single-image/pipeline-acceleration/001-identifying-hidden-pipeline-opportunities.md"
+  },
+  {
+    "id": 2,
+    "title": "Improving lead qualification",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Demand Discovery & ICP",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how sales teams can distinguish high-potential opportunities from low-fit leads. Discuss fit, intent, timing, and buying readiness without presenting unverified capabilities as existing ProfitMachines features.",
+    "outputFile": "text-only/pipeline-acceleration/002-improving-lead-qualification.md"
+  },
+  {
+    "id": 3,
+    "title": "Reducing time between lead capture and sales engagement",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Demand Discovery & ICP",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain why response delays can weaken sales opportunities and how teams can examine handoffs, ownership, and response workflows.",
+    "outputFile": "single-image/pipeline-acceleration/003-reducing-time-between-lead-capture-and-sales-engagement.md"
+  },
+  {
+    "id": 4,
+    "title": "Turning demand signals into sales opportunities",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Demand Discovery & ICP",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Discuss how buying signals, customer needs, and market changes can inform prioritization. Include practical guidance for validating signals before acting on them.",
+    "outputFile": "text-only/pipeline-acceleration/004-turning-demand-signals-into-sales-opportunities.md"
+  },
+  {
+    "id": 5,
+    "title": "Improving ideal customer profile accuracy",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Demand Discovery & ICP",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how customer characteristics, buying patterns, business needs, and commercial fit can improve account selection.",
+    "outputFile": "single-image/pipeline-acceleration/005-improving-ideal-customer-profile-accuracy.md"
+  },
+  {
+    "id": 6,
+    "title": "Finding high-value accounts",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Pipeline Quality & Flow",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Show how organizations can prioritize accounts using potential business value, fit, accessibility, and the evidence available to their teams.",
+    "outputFile": "text-only/pipeline-acceleration/006-finding-high-value-accounts.md"
+  },
+  {
+    "id": 7,
+    "title": "Diagnosing pipeline bottlenecks",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Pipeline Quality & Flow",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Describe a simple method for examining pipeline stages, conversion rates, waiting time, stalled opportunities, and ownership gaps.",
+    "outputFile": "single-image/pipeline-acceleration/007-diagnosing-pipeline-bottlenecks.md"
+  },
+  {
+    "id": 8,
+    "title": "Improving pipeline quality rather than pipeline volume",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Pipeline Quality & Flow",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Challenge the assumption that more leads automatically mean more revenue. Explain how fit, qualification, conversion, and deal value influence pipeline quality.",
+    "outputFile": "single-image/pipeline-acceleration/008-improving-pipeline-quality-rather-than-pipeline-volume.md"
+  },
+  {
+    "id": 9,
+    "title": "Improving demand-to-revenue alignment",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Pipeline Quality & Flow",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how marketing demand, sales execution, and revenue measurement should connect instead of operating as isolated functions.",
+    "outputFile": "text-only/pipeline-acceleration/009-improving-demand-to-revenue-alignment.md"
+  },
+  {
+    "id": 10,
+    "title": "Building a more predictable pipeline",
+    "category": "Pipeline Acceleration",
+    "subcategory": "Pipeline Quality & Flow",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Discuss the role of clear qualification criteria, stage definitions, consistent data, and regular pipeline reviews in improving predictability.",
+    "outputFile": "single-image/pipeline-acceleration/010-building-a-more-predictable-pipeline.md"
+  },
+  {
+    "id": 11,
+    "title": "Diagnosing conversion losses",
+    "category": "Conversion Optimization",
+    "subcategory": "Deal Execution & Qualification",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how to locate the stages where qualified opportunities fail to progress and how to investigate the reasons behind those losses.",
+    "outputFile": "single-image/conversion-optimization/011-diagnosing-conversion-losses.md"
+  },
+  {
+    "id": 12,
+    "title": "Improving discovery conversations",
+    "category": "Conversion Optimization",
+    "subcategory": "Deal Execution & Qualification",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Discuss how better questions about business challenges, consequences, priorities, and decision criteria can improve sales conversations.",
+    "outputFile": "text-only/conversion-optimization/012-improving-discovery-conversations.md"
+  },
+  {
+    "id": 13,
+    "title": "Connecting customer problems to business value",
+    "category": "Conversion Optimization",
+    "subcategory": "Deal Execution & Qualification",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how sales teams can translate a product or service discussion into a clear business case tied to the buyer's objectives.",
+    "outputFile": "single-image/conversion-optimization/013-connecting-customer-problems-to-business-value.md"
+  },
+  {
+    "id": 14,
+    "title": "Reducing friction in the buying journey",
+    "category": "Conversion Optimization",
+    "subcategory": "Deal Execution & Qualification",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explore unnecessary steps, repeated information requests, unclear next steps, and delays that can make a purchasing decision harder.",
+    "outputFile": "single-image/conversion-optimization/014-reducing-friction-in-the-buying-journey.md"
+  },
+  {
+    "id": 15,
+    "title": "Improving follow-up quality",
+    "category": "Conversion Optimization",
+    "subcategory": "Deal Execution & Qualification",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain why useful, relevant follow-ups are more valuable than repeated generic messages. Include an example of a buyer-centered follow-up approach.",
+    "outputFile": "text-only/conversion-optimization/015-improving-follow-up-quality.md"
+  },
+  {
+    "id": 16,
+    "title": "Understanding stalled deals",
+    "category": "Conversion Optimization",
+    "subcategory": "Velocity & Win-Rate Science",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Discuss how to distinguish timing issues, missing stakeholders, weak business cases, and unresolved objections from opportunities that are unlikely to progress.",
+    "outputFile": "single-image/conversion-optimization/016-understanding-stalled-deals.md"
+  },
+  {
+    "id": 17,
+    "title": "Improving proposal effectiveness",
+    "category": "Conversion Optimization",
+    "subcategory": "Velocity & Win-Rate Science",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how proposals can connect the buyer's problem, proposed approach, expected value, implementation considerations, and decision criteria.",
+    "outputFile": "single-image/conversion-optimization/017-improving-proposal-effectiveness.md"
+  },
+  {
+    "id": 18,
+    "title": "Managing sales objections constructively",
+    "category": "Conversion Optimization",
+    "subcategory": "Velocity & Win-Rate Science",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Show how sales professionals can explore the reason behind an objection and respond with relevant evidence instead of pressure.",
+    "outputFile": "text-only/conversion-optimization/018-managing-sales-objections-constructively.md"
+  },
+  {
+    "id": 19,
+    "title": "Improving deal velocity without sacrificing quality",
+    "category": "Conversion Optimization",
+    "subcategory": "Velocity & Win-Rate Science",
+    "format": "single-image",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Discuss how to remove avoidable delays while preserving buyer alignment, qualification discipline, and sound commercial decisions.",
+    "outputFile": "single-image/conversion-optimization/019-improving-deal-velocity-without-sacrificing-quality.md"
+  },
+  {
+    "id": 20,
+    "title": "Learning from won and lost deals",
+    "category": "Conversion Optimization",
+    "subcategory": "Velocity & Win-Rate Science",
+    "format": "text-only",
+    "targetAudience": "B2B Revenue Leaders & Commercial Executives",
+    "contentBrief": "Explain how structured win/loss reviews can reveal patterns in positioning, qualification, competition, value communication, and execution.",
+    "outputFile": "text-only/conversion-optimization/020-learning-from-won-and-lost-deals.md"
+  },
+  {
+    "id": 21,
+    "title": "Moving sales teams from administration to selling",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "Rep Productivity & Research",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss repetitive administrative work and how organizations can assess opportunities to streamline preparation, documentation, and coordination.",
+    "outputFile": "text-only/ai-augmented-sales-teams/021-moving-sales-teams-from-administration-to-selling.md"
+  },
+  {
+    "id": 22,
+    "title": "Human judgment combined with AI assistance",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "Rep Productivity & Research",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain where AI can support research, summarization, preparation, and prioritization while leaving relationship building and consequential judgment with people.",
+    "outputFile": "single-image/ai-augmented-sales-teams/022-human-judgment-combined-with-ai-assistance.md"
+  },
+  {
+    "id": 23,
+    "title": "Improving sales meeting preparation",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "Rep Productivity & Research",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Show how a consistent preparation workflow can organize account context, previous interactions, customer objectives, and questions for the next meeting.",
+    "outputFile": "single-image/ai-augmented-sales-teams/023-improving-sales-meeting-preparation.md"
+  },
+  {
+    "id": 24,
+    "title": "Improving sales research workflows",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "Rep Productivity & Research",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how sales teams can structure account research and turn relevant information into useful preparation rather than collecting information without a purpose.",
+    "outputFile": "text-only/ai-augmented-sales-teams/024-improving-sales-research-workflows.md"
+  },
+  {
+    "id": 25,
+    "title": "Improving sales conversation insights",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "Rep Productivity & Research",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss how reviewing conversation themes, unanswered questions, objections, and agreed next steps can support coaching and execution.",
+    "outputFile": "single-image/ai-augmented-sales-teams/025-improving-sales-conversation-insights.md"
+  },
+  {
+    "id": 26,
+    "title": "Personalizing sales engagement responsibly",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "AI Guided Workflows",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how personalization should be based on relevant business context rather than superficial personalization or unsupported assumptions.",
+    "outputFile": "text-only/ai-augmented-sales-teams/026-personalizing-sales-engagement-responsibly.md"
+  },
+  {
+    "id": 27,
+    "title": "Building repeatable sales coaching",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "AI Guided Workflows",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss how managers can use observed behaviors, agreed standards, and specific examples to improve coaching consistency.",
+    "outputFile": "single-image/ai-augmented-sales-teams/027-building-repeatable-sales-coaching.md"
+  },
+  {
+    "id": 28,
+    "title": "Supporting sales representatives with better context",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "AI Guided Workflows",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain why representatives need accessible account history, customer objectives, prior commitments, and clear next actions.",
+    "outputFile": "single-image/ai-augmented-sales-teams/028-supporting-sales-representatives-with-better-context.md"
+  },
+  {
+    "id": 29,
+    "title": "Avoiding over-automation in sales",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "AI Guided Workflows",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss why automated activity is not equivalent to customer value and why human review, relevance, and relationship quality matter.",
+    "outputFile": "text-only/ai-augmented-sales-teams/029-avoiding-over-automation-in-sales.md"
+  },
+  {
+    "id": 30,
+    "title": "Measuring AI-assisted sales productivity",
+    "category": "AI-Augmented Sales Teams",
+    "subcategory": "AI Guided Workflows",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how to evaluate saved time, output quality, conversion, adoption, and business outcomes instead of measuring AI usage alone.",
+    "outputFile": "single-image/ai-augmented-sales-teams/030-measuring-ai-assisted-sales-productivity.md"
+  },
+  {
+    "id": 31,
+    "title": "Diagnosing handoff friction between teams",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Operational Systems & Clean Data",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how unclear ownership and repeated work between marketing, sales, and revenue operations can slow execution.",
+    "outputFile": "single-image/revenue-team-efficiency/031-diagnosing-handoff-friction-between-teams.md"
+  },
+  {
+    "id": 32,
+    "title": "Creating clearer revenue workflows",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Operational Systems & Clean Data",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Show how teams can map a workflow, define ownership, identify decision points, and remove unnecessary steps.",
+    "outputFile": "single-image/revenue-team-efficiency/032-creating-clearer-revenue-workflows.md"
+  },
+  {
+    "id": 33,
+    "title": "Reducing duplicate work across revenue systems",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Operational Systems & Clean Data",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss duplicate records, repeated data entry, conflicting information, and the importance of process and data governance.",
+    "outputFile": "single-image/revenue-team-efficiency/033-reducing-duplicate-work-across-revenue-systems.md"
+  },
+  {
+    "id": 34,
+    "title": "Improving CRM data usefulness",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Operational Systems & Clean Data",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how data quality, consistent definitions, and practical reporting requirements influence revenue decisions.",
+    "outputFile": "text-only/revenue-team-efficiency/034-improving-crm-data-usefulness.md"
+  },
+  {
+    "id": 35,
+    "title": "Improving sales and marketing alignment",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Operational Systems & Clean Data",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Describe how shared definitions of target customers, qualified opportunities, handoffs, and outcomes can reduce friction.",
+    "outputFile": "single-image/revenue-team-efficiency/035-improving-sales-and-marketing-alignment.md"
+  },
+  {
+    "id": 36,
+    "title": "Making revenue meetings more useful",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Capacity, Forecasting & Cadence",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Show how teams can replace unfocused status reporting with decisions about risks, blockers, priorities, and next actions.",
+    "outputFile": "text-only/revenue-team-efficiency/036-making-revenue-meetings-more-useful.md"
+  },
+  {
+    "id": 37,
+    "title": "Reducing time lost to unclear ownership",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Capacity, Forecasting & Cadence",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss how named owners, deadlines, escalation paths, and explicit next steps improve execution discipline.",
+    "outputFile": "single-image/revenue-team-efficiency/037-reducing-time-lost-to-unclear-ownership.md"
+  },
+  {
+    "id": 38,
+    "title": "Designing scalable revenue processes",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Capacity, Forecasting & Cadence",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain why processes that work for a small team may fail at larger scale, and how documented standards can support growth.",
+    "outputFile": "text-only/revenue-team-efficiency/038-designing-scalable-revenue-processes.md"
+  },
+  {
+    "id": 39,
+    "title": "Measuring revenue team capacity",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Capacity, Forecasting & Cadence",
+    "format": "text-only",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Discuss how to examine workload, time allocation, repetitive work, and available capacity without assuming that all saved time becomes revenue.",
+    "outputFile": "text-only/revenue-team-efficiency/039-measuring-revenue-team-capacity.md"
+  },
+  {
+    "id": 40,
+    "title": "Building a continuous improvement system for revenue operations",
+    "category": "Revenue Team Efficiency",
+    "subcategory": "Capacity, Forecasting & Cadence",
+    "format": "single-image",
+    "targetAudience": "Sales Leaders, RevOps Directors & GTM Enablement Leads",
+    "contentBrief": "Explain how recurring diagnostics, measurable changes, accountable owners, and review cycles can improve workflows over time.",
+    "outputFile": "single-image/revenue-team-efficiency/040-building-a-continuous-improvement-system-for-revenue-operations.md"
+  },
+  {
+    "id": 41,
+    "title": "Connecting revenue growth to profitable growth",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Pricing Discipline & Unit Margins",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Challenge revenue growth as the only success measure. Explain why contribution, cost to serve, and margin quality also matter.",
+    "outputFile": "text-only/gross-margin-improvement/041-connecting-revenue-growth-to-profitable-growth.md"
+  },
+  {
+    "id": 42,
+    "title": "Identifying low-margin revenue patterns",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Pricing Discipline & Unit Margins",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss how businesses can compare customer segments, products, channels, and deal structures to understand where margin pressure originates.",
+    "outputFile": "single-image/gross-margin-improvement/042-identifying-low-margin-revenue-patterns.md"
+  },
+  {
+    "id": 43,
+    "title": "Understanding cost to serve",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Pricing Discipline & Unit Margins",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how support requirements, implementation effort, service complexity, and delivery costs can influence customer profitability.",
+    "outputFile": "single-image/gross-margin-improvement/043-understanding-cost-to-serve.md"
+  },
+  {
+    "id": 44,
+    "title": "Evaluating discounting decisions",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Pricing Discipline & Unit Margins",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss how discounts affect realized price and contribution, and why discount decisions should be evaluated against commercial context.",
+    "outputFile": "text-only/gross-margin-improvement/044-evaluating-discounting-decisions.md"
+  },
+  {
+    "id": 45,
+    "title": "Improving pricing discipline",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Pricing Discipline & Unit Margins",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how clear pricing principles, value communication, approval rules, and deal reviews can support better commercial decisions.",
+    "outputFile": "single-image/gross-margin-improvement/045-improving-pricing-discipline.md"
+  },
+  {
+    "id": 46,
+    "title": "Improving customer and product profitability visibility",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Commercial Terms & Expansion",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Show how better visibility into revenue, delivery cost, support effort, and account characteristics can help leaders evaluate profitability.",
+    "outputFile": "single-image/gross-margin-improvement/046-improving-customer-and-product-profitability-visibility.md"
+  },
+  {
+    "id": 47,
+    "title": "Balancing customer growth and margin quality",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Commercial Terms & Expansion",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss how customer acquisition and expansion decisions should consider both potential revenue and the resources needed to serve customers.",
+    "outputFile": "text-only/gross-margin-improvement/047-balancing-customer-growth-and-margin-quality.md"
+  },
+  {
+    "id": 48,
+    "title": "Identifying avoidable commercial leakage",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Commercial Terms & Expansion",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explore preventable value loss from inconsistent pricing, untracked concessions, process failures, or missed contract commitments.",
+    "outputFile": "single-image/gross-margin-improvement/048-identifying-avoidable-commercial-leakage.md"
+  },
+  {
+    "id": 49,
+    "title": "Improving resource allocation for profitable growth",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Commercial Terms & Expansion",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how leaders can prioritize initiatives based on expected value, evidence, resource needs, and opportunity cost.",
+    "outputFile": "text-only/gross-margin-improvement/049-improving-resource-allocation-for-profitable-growth.md"
+  },
+  {
+    "id": 50,
+    "title": "Building a margin-focused growth operating model",
+    "category": "Gross Margin Improvement",
+    "subcategory": "Commercial Terms & Expansion",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Show how revenue, pricing, delivery efficiency, customer mix, and financial accountability can be considered together.",
+    "outputFile": "single-image/gross-margin-improvement/050-building-a-margin-focused-growth-operating-model.md"
+  },
+  {
+    "id": 51,
+    "title": "Understanding the real cost of manual work",
+    "category": "Cost Optimization",
+    "subcategory": "CAC Reduction & Stack Efficiency",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how to assess repetitive activities, time consumed, error rates, rework, and the operational cost of existing processes.",
+    "outputFile": "single-image/cost-optimization/051-understanding-the-real-cost-of-manual-work.md"
+  },
+  {
+    "id": 52,
+    "title": "Identifying automation opportunities by business value",
+    "category": "Cost Optimization",
+    "subcategory": "CAC Reduction & Stack Efficiency",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Describe how to prioritize workflows based on business impact, frequency, complexity, risk, and feasibility instead of automating everything.",
+    "outputFile": "single-image/cost-optimization/052-identifying-automation-opportunities-by-business-value.md"
+  },
+  {
+    "id": 53,
+    "title": "Evaluating AI investment beyond tool costs",
+    "category": "Cost Optimization",
+    "subcategory": "CAC Reduction & Stack Efficiency",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss the total cost of an initiative, including implementation, integration, governance, maintenance, adoption, and ongoing oversight.",
+    "outputFile": "text-only/cost-optimization/053-evaluating-ai-investment-beyond-tool-costs.md"
+  },
+  {
+    "id": 54,
+    "title": "Examining overlapping software and vendor spending",
+    "category": "Cost Optimization",
+    "subcategory": "CAC Reduction & Stack Efficiency",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how organizations can review tool usage, duplication, business ownership, and actual value before making consolidation decisions.",
+    "outputFile": "single-image/cost-optimization/054-examining-overlapping-software-and-vendor-spending.md"
+  },
+  {
+    "id": 55,
+    "title": "Reducing process rework",
+    "category": "Cost Optimization",
+    "subcategory": "CAC Reduction & Stack Efficiency",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss the causes of rework, such as incomplete information, unclear standards, inconsistent handoffs, and preventable errors.",
+    "outputFile": "single-image/cost-optimization/055-reducing-process-rework.md"
+  },
+  {
+    "id": 56,
+    "title": "Understanding the cost of slow decisions",
+    "category": "Cost Optimization",
+    "subcategory": "Capital Efficiency & Retention",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how decision delays can consume staff capacity, defer benefits, and create downstream bottlenecks. Avoid inventing monetary estimates.",
+    "outputFile": "text-only/cost-optimization/056-understanding-the-cost-of-slow-decisions.md"
+  },
+  {
+    "id": 57,
+    "title": "Improving operational capacity without automatic headcount assumptions",
+    "category": "Cost Optimization",
+    "subcategory": "Capital Efficiency & Retention",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Discuss how better processes may free capacity, while explaining that realized savings depend on how the organization uses that capacity.",
+    "outputFile": "single-image/cost-optimization/057-improving-operational-capacity-without-automatic-headcount-assumptions.md"
+  },
+  {
+    "id": 58,
+    "title": "Evaluating build-versus-buy decisions",
+    "category": "Cost Optimization",
+    "subcategory": "Capital Efficiency & Retention",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain how to compare business fit, total cost, integration effort, ownership, security, flexibility, and long-term maintenance.",
+    "outputFile": "text-only/cost-optimization/058-evaluating-build-versus-buy-decisions.md"
+  },
+  {
+    "id": 59,
+    "title": "Building a business case for process improvement",
+    "category": "Cost Optimization",
+    "subcategory": "Capital Efficiency & Retention",
+    "format": "single-image",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Show how to establish a baseline, define the desired outcome, estimate costs transparently, and specify how results will be measured.",
+    "outputFile": "single-image/cost-optimization/059-building-a-business-case-for-process-improvement.md"
+  },
+  {
+    "id": 60,
+    "title": "Distinguishing cost reduction from value destruction",
+    "category": "Cost Optimization",
+    "subcategory": "Capital Efficiency & Retention",
+    "format": "text-only",
+    "targetAudience": "CFOs, CROs, Deal Desk Leaders & Commercial Operations Heads",
+    "contentBrief": "Explain why cutting expenditure indiscriminately can damage customer experience, execution quality, and long-term revenue potential.",
+    "outputFile": "text-only/cost-optimization/060-distinguishing-cost-reduction-from-value-destruction.md"
+  },
+  {
+    "id": 61,
+    "title": "Turning revenue data into decisions",
+    "category": "Revenue Intelligence",
+    "subcategory": "Leading Indicators & Signal Fidelity",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain the difference between collecting dashboards and identifying a specific business decision supported by reliable evidence.",
+    "outputFile": "single-image/revenue-intelligence/061-turning-revenue-data-into-decisions.md"
+  },
+  {
+    "id": 62,
+    "title": "Improving forecast reliability",
+    "category": "Revenue Intelligence",
+    "subcategory": "Leading Indicators & Signal Fidelity",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss consistent stage definitions, historical performance, deal evidence, assumptions, and forecast reviews.",
+    "outputFile": "single-image/revenue-intelligence/062-improving-forecast-reliability.md"
+  },
+  {
+    "id": 63,
+    "title": "Identifying leading indicators of revenue performance",
+    "category": "Revenue Intelligence",
+    "subcategory": "Leading Indicators & Signal Fidelity",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain how earlier signals may help teams recognize risk or opportunity before final revenue results are visible.",
+    "outputFile": "text-only/revenue-intelligence/063-identifying-leading-indicators-of-revenue-performance.md"
+  },
+  {
+    "id": 64,
+    "title": "Improving pipeline risk visibility",
+    "category": "Revenue Intelligence",
+    "subcategory": "Leading Indicators & Signal Fidelity",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss ways to identify stalled deals, missing stakeholders, weak next steps, inconsistent data, and unsupported close-date assumptions.",
+    "outputFile": "single-image/revenue-intelligence/064-improving-pipeline-risk-visibility.md"
+  },
+  {
+    "id": 65,
+    "title": "Connecting activity metrics to business outcomes",
+    "category": "Revenue Intelligence",
+    "subcategory": "Leading Indicators & Signal Fidelity",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Challenge activity-only reporting and explain how to connect activity quality with opportunity progression, conversion, and commercial outcomes.",
+    "outputFile": "single-image/revenue-intelligence/065-connecting-activity-metrics-to-business-outcomes.md"
+  },
+  {
+    "id": 66,
+    "title": "Understanding customer and account signals",
+    "category": "Revenue Intelligence",
+    "subcategory": "Root-Cause Analysis & Modeling",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss how changes in engagement, business priorities, usage, or customer circumstances may inform account decisions when supported by reliable data.",
+    "outputFile": "text-only/revenue-intelligence/066-understanding-customer-and-account-signals.md"
+  },
+  {
+    "id": 67,
+    "title": "Improving executive revenue visibility",
+    "category": "Revenue Intelligence",
+    "subcategory": "Root-Cause Analysis & Modeling",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain how leaders can use a focused set of measures to understand performance, risk, capacity, and decisions requiring attention.",
+    "outputFile": "single-image/revenue-intelligence/067-improving-executive-revenue-visibility.md"
+  },
+  {
+    "id": 68,
+    "title": "Detecting revenue leakage through analysis",
+    "category": "Revenue Intelligence",
+    "subcategory": "Root-Cause Analysis & Modeling",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss how organizations can investigate patterns involving discounting, delayed deals, lost renewals, or inconsistent commercial execution.",
+    "outputFile": "text-only/revenue-intelligence/068-detecting-revenue-leakage-through-analysis.md"
+  },
+  {
+    "id": 69,
+    "title": "Building a shared revenue measurement framework",
+    "category": "Revenue Intelligence",
+    "subcategory": "Root-Cause Analysis & Modeling",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain why teams need common definitions, data ownership, metric governance, and consistent reporting.",
+    "outputFile": "text-only/revenue-intelligence/069-building-a-shared-revenue-measurement-framework.md"
+  },
+  {
+    "id": 70,
+    "title": "Moving from descriptive reporting to actionable intelligence",
+    "category": "Revenue Intelligence",
+    "subcategory": "Root-Cause Analysis & Modeling",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Show how to move from what happened to why it happened, what may happen next, and what action should be evaluated.",
+    "outputFile": "single-image/revenue-intelligence/070-moving-from-descriptive-reporting-to-actionable-intelligence.md"
+  },
+  {
+    "id": 71,
+    "title": "Understanding where sales agents can add value",
+    "category": "AI Sales Execution",
+    "subcategory": "Real-Time Deal Co-Piloting",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain suitable workflow-support use cases, their boundaries, and the need for evaluation and human oversight.",
+    "outputFile": "single-image/ai-sales-execution/071-understanding-where-sales-agents-can-add-value.md"
+  },
+  {
+    "id": 72,
+    "title": "Designing a lead research and preparation workflow",
+    "category": "AI Sales Execution",
+    "subcategory": "Real-Time Deal Co-Piloting",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Show how research, qualification criteria, evidence collection, and representative review can form a responsible workflow.",
+    "outputFile": "single-image/ai-sales-execution/072-designing-a-lead-research-and-preparation-workflow.md"
+  },
+  {
+    "id": 73,
+    "title": "Improving next-action recommendations",
+    "category": "AI Sales Execution",
+    "subcategory": "Real-Time Deal Co-Piloting",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss how teams can prioritize next steps using customer context, opportunity stage, commitments, and relevant evidence.",
+    "outputFile": "text-only/ai-sales-execution/073-improving-next-action-recommendations.md"
+  },
+  {
+    "id": 74,
+    "title": "Coordinating follow-up workflows",
+    "category": "AI Sales Execution",
+    "subcategory": "Real-Time Deal Co-Piloting",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain how reminders, task ownership, relevant messaging, and escalation rules can support consistent follow-through.",
+    "outputFile": "single-image/ai-sales-execution/074-coordinating-follow-up-workflows.md"
+  },
+  {
+    "id": 75,
+    "title": "Supporting sales execution with workflow intelligence",
+    "category": "AI Sales Execution",
+    "subcategory": "Real-Time Deal Co-Piloting",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss how systems can surface missing information, overdue actions, and process exceptions without replacing human accountability.",
+    "outputFile": "single-image/ai-sales-execution/075-supporting-sales-execution-with-workflow-intelligence.md"
+  },
+  {
+    "id": 76,
+    "title": "Designing human approval into AI-assisted sales",
+    "category": "AI Sales Execution",
+    "subcategory": "Autonomous Guardrails & Negotiation",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain which actions may be suitable for automation and which require review, especially customer-facing or commercially consequential actions.",
+    "outputFile": "text-only/ai-sales-execution/076-designing-human-approval-into-ai-assisted-sales.md"
+  },
+  {
+    "id": 77,
+    "title": "Evaluating sales-agent quality",
+    "category": "AI Sales Execution",
+    "subcategory": "Autonomous Guardrails & Negotiation",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss accuracy, relevance, reliability, escalation behavior, privacy, and measurable task completion rather than activity volume alone.",
+    "outputFile": "single-image/ai-sales-execution/077-evaluating-sales-agent-quality.md"
+  },
+  {
+    "id": 78,
+    "title": "Preventing fragmented AI workflows",
+    "category": "AI Sales Execution",
+    "subcategory": "Autonomous Guardrails & Negotiation",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain why disconnected tools and agents can create duplicate work, inconsistent outputs, and unclear ownership.",
+    "outputFile": "text-only/ai-sales-execution/078-preventing-fragmented-ai-workflows.md"
+  },
+  {
+    "id": 79,
+    "title": "Integrating AI execution with revenue operations",
+    "category": "AI Sales Execution",
+    "subcategory": "Autonomous Guardrails & Negotiation",
+    "format": "text-only",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Discuss workflow integration, data consistency, access control, monitoring, and accountable process ownership.",
+    "outputFile": "text-only/ai-sales-execution/079-integrating-ai-execution-with-revenue-operations.md"
+  },
+  {
+    "id": 80,
+    "title": "Measuring the business impact of AI-enabled execution",
+    "category": "AI Sales Execution",
+    "subcategory": "Autonomous Guardrails & Negotiation",
+    "format": "single-image",
+    "targetAudience": "CROs, Revenue Operations Directors & Enterprise Sales Executives",
+    "contentBrief": "Explain how to establish baselines and assess quality, time, adoption, cycle time, and business outcomes.",
+    "outputFile": "single-image/ai-sales-execution/080-measuring-the-business-impact-of-ai-enabled-execution.md"
+  },
+  {
+    "id": 81,
+    "title": "Revenue transformation as an executive priority",
+    "category": "Executive Perspectives",
+    "subcategory": "CEO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Enterprise CEOs, Board Members & Managing Directors",
+    "contentBrief": "Discuss why revenue performance should be approached as a connected operating system rather than a collection of isolated departmental initiatives.",
+    "outputFile": "text-only/executive-perspectives/081-revenue-transformation-as-an-executive-priority.md"
+  },
+  {
+    "id": 82,
+    "title": "Moving from AI experimentation to business outcomes",
+    "category": "Executive Perspectives",
+    "subcategory": "CEO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Enterprise CEOs, Board Members & Managing Directors",
+    "contentBrief": "Explain how executives can prioritize use cases, assign ownership, establish baselines, and review evidence of value.",
+    "outputFile": "single-image/executive-perspectives/082-moving-from-ai-experimentation-to-business-outcomes.md"
+  },
+  {
+    "id": 83,
+    "title": "Building a more resilient growth model",
+    "category": "Executive Perspectives",
+    "subcategory": "CEO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Enterprise CEOs, Board Members & Managing Directors",
+    "contentBrief": "Discuss how customer concentration, pipeline dependence, commercial efficiency, and execution quality can influence growth resilience.",
+    "outputFile": "single-image/executive-perspectives/083-building-a-more-resilient-growth-model.md"
+  },
+  {
+    "id": 84,
+    "title": "Improving executive visibility into revenue friction",
+    "category": "Executive Perspectives",
+    "subcategory": "CEO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Enterprise CEOs, Board Members & Managing Directors",
+    "contentBrief": "Explain how leaders can identify cross-functional bottlenecks and prioritize problems that affect business performance.",
+    "outputFile": "text-only/executive-perspectives/084-improving-executive-visibility-into-revenue-friction.md"
+  },
+  {
+    "id": 85,
+    "title": "Connecting growth strategy to operational execution",
+    "category": "Executive Perspectives",
+    "subcategory": "CEO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Enterprise CEOs, Board Members & Managing Directors",
+    "contentBrief": "Show why strategic objectives need clear operating priorities, accountable owners, measurable indicators, and regular review.",
+    "outputFile": "single-image/executive-perspectives/085-connecting-growth-strategy-to-operational-execution.md"
+  },
+  {
+    "id": 86,
+    "title": "Improving revenue predictability",
+    "category": "Executive Perspectives",
+    "subcategory": "CRO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Chief Revenue Officers, VPs of Sales & Commercial Heads",
+    "contentBrief": "Discuss how pipeline quality, sales discipline, consistent stages, and reliable evidence can improve revenue planning.",
+    "outputFile": "text-only/executive-perspectives/086-improving-revenue-predictability.md"
+  },
+  {
+    "id": 87,
+    "title": "Balancing pipeline creation with conversion",
+    "category": "Executive Perspectives",
+    "subcategory": "CRO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Revenue Officers, VPs of Sales & Commercial Heads",
+    "contentBrief": "Explain why demand generation and sales conversion should be managed as connected parts of the revenue process.",
+    "outputFile": "single-image/executive-perspectives/087-balancing-pipeline-creation-with-conversion.md"
+  },
+  {
+    "id": 88,
+    "title": "Improving sales capacity and productivity",
+    "category": "Executive Perspectives",
+    "subcategory": "CRO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Revenue Officers, VPs of Sales & Commercial Heads",
+    "contentBrief": "Discuss how workload, deal complexity, process friction, and coaching can affect sales capacity and performance.",
+    "outputFile": "single-image/executive-perspectives/088-improving-sales-capacity-and-productivity.md"
+  },
+  {
+    "id": 89,
+    "title": "Building a disciplined revenue operating rhythm",
+    "category": "Executive Perspectives",
+    "subcategory": "CRO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Revenue Officers, VPs of Sales & Commercial Heads",
+    "contentBrief": "Explain how reviews, priorities, forecasts, blockers, and accountability can support execution.",
+    "outputFile": "single-image/executive-perspectives/089-building-a-disciplined-revenue-operating-rhythm.md"
+  },
+  {
+    "id": 90,
+    "title": "Managing revenue performance through leading indicators",
+    "category": "Executive Perspectives",
+    "subcategory": "CRO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Chief Revenue Officers, VPs of Sales & Commercial Heads",
+    "contentBrief": "Discuss how a CRO can identify emerging risks and opportunities using relevant leading indicators instead of relying only on lagging results.",
+    "outputFile": "text-only/executive-perspectives/090-managing-revenue-performance-through-leading-indicators.md"
+  },
+  {
+    "id": 91,
+    "title": "Evaluating AI investment through financial accountability",
+    "category": "Executive Perspectives",
+    "subcategory": "CFO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Financial Officers, VPs of Finance & FP&A Leaders",
+    "contentBrief": "Explain how to evaluate costs, expected benefits, assumptions, implementation risks, and post-launch measurement.",
+    "outputFile": "single-image/executive-perspectives/091-evaluating-ai-investment-through-financial-accountability.md"
+  },
+  {
+    "id": 92,
+    "title": "Connecting growth investments to contribution and margin",
+    "category": "Executive Perspectives",
+    "subcategory": "CFO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Financial Officers, VPs of Finance & FP&A Leaders",
+    "contentBrief": "Discuss why investment decisions should consider the quality and cost of growth rather than revenue alone.",
+    "outputFile": "single-image/executive-perspectives/092-connecting-growth-investments-to-contribution-and-margin.md"
+  },
+  {
+    "id": 93,
+    "title": "Measuring the financial impact of operational friction",
+    "category": "Executive Perspectives",
+    "subcategory": "CFO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Chief Financial Officers, VPs of Finance & FP&A Leaders",
+    "contentBrief": "Explain how delays, rework, unused capacity, and process failures can be assessed without double-counting costs or presenting estimates as realized savings.",
+    "outputFile": "text-only/executive-perspectives/093-measuring-the-financial-impact-of-operational-friction.md"
+  },
+  {
+    "id": 94,
+    "title": "Establishing credible ROI baselines",
+    "category": "Executive Perspectives",
+    "subcategory": "CFO Perspectives",
+    "format": "single-image",
+    "targetAudience": "Chief Financial Officers, VPs of Finance & FP&A Leaders",
+    "contentBrief": "Show how to define a baseline, identify attributable outcomes, record costs, choose a measurement period, and state uncertainty.",
+    "outputFile": "single-image/executive-perspectives/094-establishing-credible-roi-baselines.md"
+  },
+  {
+    "id": 95,
+    "title": "Improving financial visibility into revenue operations",
+    "category": "Executive Perspectives",
+    "subcategory": "CFO Perspectives",
+    "format": "text-only",
+    "targetAudience": "Chief Financial Officers, VPs of Finance & FP&A Leaders",
+    "contentBrief": "Discuss the importance of connecting commercial activity, realized revenue, cost to serve, and margin information.",
+    "outputFile": "text-only/executive-perspectives/095-improving-financial-visibility-into-revenue-operations.md"
+  },
+  {
+    "id": 96,
+    "title": "Scaling growth without scaling every inefficiency",
+    "category": "Executive Perspectives",
+    "subcategory": "Founders & Growth Leaders",
+    "format": "single-image",
+    "targetAudience": "B2B Tech Founders, Co-Founders & Growth Equity Operators",
+    "contentBrief": "Explain how founders can identify repeatable processes, remove unnecessary friction, and improve capacity before simply adding more activity.",
+    "outputFile": "single-image/executive-perspectives/096-scaling-growth-without-scaling-every-inefficiency.md"
+  },
+  {
+    "id": 97,
+    "title": "Building a repeatable go-to-market model",
+    "category": "Executive Perspectives",
+    "subcategory": "Founders & Growth Leaders",
+    "format": "text-only",
+    "targetAudience": "B2B Tech Founders, Co-Founders & Growth Equity Operators",
+    "contentBrief": "Discuss target customers, positioning, demand creation, sales execution, measurement, and learning cycles.",
+    "outputFile": "text-only/executive-perspectives/097-building-a-repeatable-go-to-market-model.md"
+  },
+  {
+    "id": 98,
+    "title": "Choosing the next growth constraint to solve",
+    "category": "Executive Perspectives",
+    "subcategory": "Founders & Growth Leaders",
+    "format": "single-image",
+    "targetAudience": "B2B Tech Founders, Co-Founders & Growth Equity Operators",
+    "contentBrief": "Show how leaders can identify the constraint most responsible for limiting growth rather than launching many disconnected initiatives.",
+    "outputFile": "single-image/executive-perspectives/098-choosing-the-next-growth-constraint-to-solve.md"
+  },
+  {
+    "id": 99,
+    "title": "Connecting customer acquisition, sales execution, and profitability",
+    "category": "Executive Perspectives",
+    "subcategory": "Founders & Growth Leaders",
+    "format": "text-only",
+    "targetAudience": "B2B Tech Founders, Co-Founders & Growth Equity Operators",
+    "contentBrief": "Explain how the three areas interact and why optimizing one in isolation can create problems elsewhere.",
+    "outputFile": "text-only/executive-perspectives/099-connecting-customer-acquisition-sales-execution-and-profitability.md"
+  },
+  {
+    "id": 100,
+    "title": "Building an AI-native revenue operating model",
+    "category": "Executive Perspectives",
+    "subcategory": "Founders & Growth Leaders",
+    "format": "single-image",
+    "targetAudience": "B2B Tech Founders, Co-Founders & Growth Equity Operators",
+    "contentBrief": "Present a practical executive perspective on combining people, processes, data, AI assistance, governance, and business measurement into a connected revenue system.",
+    "outputFile": "single-image/executive-perspectives/100-building-an-ai-native-revenue-operating-model.md"
+  }
+]
