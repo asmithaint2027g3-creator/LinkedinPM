@@ -162,15 +162,10 @@ for (let i = 0; i < topics.length; i++) {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--pm-blue-primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Visual Asset &amp; Framework Architecture (1200 &times; 1200)
         </h3>
-        <div style="display:flex; gap:0.5rem; align-items:center;">
-          <a href="../../single-image-generator.html" class="pm-btn pm-btn-primary pm-btn-sm">
-            🎨 Customize in Studio
-          </a>
-          <a href="${imageRelativePath}" target="_blank" class="pm-btn pm-btn-secondary pm-btn-sm">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            View Full Image
-          </a>
-        </div>
+        <a href="${imageRelativePath}" target="_blank" class="pm-btn pm-btn-secondary pm-btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Full Image
+        </a>
       </div>
       <div class="pm-image-wrapper">
         <img src="${imageRelativePath}" alt="${escapeHtml(visualBriefDict['Accessibility Alt Text'] || topic.title)}" class="pm-post-image" loading="lazy">

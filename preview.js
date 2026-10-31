@@ -231,16 +231,11 @@
           <div style="padding:1rem 1.25rem; background:#FAFAFC; border-bottom:1px solid var(--pm-border); display:flex; justify-content:space-between; align-items:center;">
             <strong style="font-size:0.9rem; color:var(--pm-text-heading); display:flex; align-items:center; gap:0.5rem;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--pm-blue-primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              Executive Infographic Architecture (1200 &times; 1250)
+              Visual Asset (1200 &times; 1200)
             </strong>
-            <div style="display:flex; gap:0.5rem;">
-              <a href="single-image-generator.html" class="pm-btn pm-btn-primary pm-btn-sm" style="text-decoration:none;">
-                🎨 Customize with My Content &rarr;
-              </a>
-              <a href="${item.imagePath}" target="_blank" class="pm-btn pm-btn-secondary pm-btn-sm" style="text-decoration:none;">
-                Open PNG &rarr;
-              </a>
-            </div>
+            <a href="${item.imagePath}" target="_blank" class="pm-btn pm-btn-secondary pm-btn-sm" style="text-decoration:none;">
+              Open Full PNG &rarr;
+            </a>
           </div>
           <div style="background:#0B132B; padding:1.5rem; display:flex; justify-content:center;">
             <img src="${item.imagePath}" alt="${escapeHtml(vb.altText)}" style="max-width:100%; max-height:550px; border-radius:8px; box-shadow:var(--pm-shadow-lg);">
