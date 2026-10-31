@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProfitMachines — Single Image Post Studio & Template Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --pm-blue: #2563eb;
+      --pm-blue-dark: #1d4ed8;
+      --pm-blue-light: #eff6ff;
+      --pm-blue-border: #bfdbfe;
+      --pm-slate-900: #0f172a;
+      --pm-slate-800: #1e293b;
+      --pm-slate-700: #334155;
+      --pm-slate-600: #475569;
+      --pm-slate-400: #94a3b8;
+      --pm-slate-200: #e2e8f0;
+      --pm-slate-100: #f1f5f9;
+      --pm-slate-50: #f8fafc;
+      --pm-red: #ef4444;
+      --pm-red-dark: #b91c1c;
+      --pm-red-light: #fef2f2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0b1120;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Studio Nav */
+    .studio-nav {
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo-hex {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .brand-title span { color: #60a5fa; }
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .studio-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-secondary {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover { background: #334155; color: #fff; }
+    .btn-success {
+      background: #10b981;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+    .btn-success:hover { background: #059669; }
+
+    /* Studio Main Layout */
+    .studio-layout {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      flex: 1;
+      overflow: hidden;
+      height: calc(100vh - 69px);
+    }
+
+    /* Editor Sidebar */
+    .editor-pane {
+      background: #0f172a;
+      border-right: 1px solid #1e293b;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+    .editor-pane::-webkit-scrollbar { width: 6px; }
+    .editor-pane::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+    .pane-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #1e293b;
+    }
+    .pane-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .pane-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 0.4rem;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+    .form-textarea { resize: vertical; min-height: 60px; line-height: 1.4; }
+
+    .accordion-section {
+      background: #131d33;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #60a5fa;
+      background: rgba(37, 99, 235, 0.08);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-body { padding: 1rem; }
+
+    /* Canvas / Preview Stage */
+    .preview-stage {
+      background: #060913;
+      padding: 2rem;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    .preview-toolbar {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    /* ─── THE 1200x1200 / 1200x1350 INFOGRAPHIC MASTER CARD ─── */
+    .graphic-canvas-wrapper {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      transform-origin: top center;
+    }
+
+    #graphicContainer {
+      width: 1200px;
+      min-height: 1250px;
+      background-color: #fbfcfd;
+      background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      padding: 48px 52px;
+      color: #0f172a;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      position: relative;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* 1. Top Header */
+    .g-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .g-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .g-logo-box {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4);
+    }
+    .g-logo-box svg { width: 28px; height: 28px; color: #ffffff; }
+    .g-brand-text { display: flex; flex-direction: column; }
+    .g-company-name {
+      font-size: 22px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .g-company-name span { color: #2563eb; }
+    .g-company-sub {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .g-est-line {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #2563eb;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+    .g-category-pill {
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+    }
+
+    /* 2. Main Title Area */
+    .g-title-section {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+    .g-keyword-pill {
+      display: inline-block;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+    .g-headline {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.22;
+      color: #0f172a;
+      letter-spacing: -0.6px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      max-width: 1060px;
+    }
+    .g-headline-highlight {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.08);
+      padding: 2px 10px;
+      border-radius: 8px;
+      display: inline;
+    }
+    .g-subheadline-wrap {
+      border-left: 3px solid #2563eb;
+      padding-left: 12px;
+    }
+    .g-subheadline {
+      font-size: 15.5px;
+      font-weight: 600;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    /* 3. Hero Cards (2 Columns) */
+    .g-hero-grid {
+      display: grid;
+      grid-template-columns: 7.2fr 4.8fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .g-intel-card {
+      background: #ffffff;
+      border: 2px solid #2563eb;
+      border-radius: 16px;
+      padding: 22px 26px;
+      box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .g-intel-badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      width: fit-content;
+      margin-bottom: 10px;
+    }
+    .g-intel-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1d4ed8;
+      letter-spacing: -0.4px;
+      margin-bottom: 8px;
+    }
+    .g-intel-body {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .g-intel-source {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 10.5px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .g-intel-source svg { width: 13px; height: 13px; color: #2563eb; }
+
+    .g-model-card {
+      background: #0a1128;
+      border-radius: 16px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .g-model-header {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+    }
+    .g-model-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+    .g-shield-outer {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 2px dashed rgba(59, 130, 246, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
+      box-shadow: 0 0 30px rgba(37, 99, 235, 0.3);
+    }
+    .g-shield-inner {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.6);
+    }
+    .g-shield-inner svg { width: 28px; height: 28px; color: #fff; }
+    .g-model-caption {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #93c5fd;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    /* 4. Critical Exposures Matrix (4 Points with Signature Red Left Curve) */
+    .g-section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .g-eyebrow-red { color: #b91c1c; }
+    .g-eyebrow-red svg { width: 14px; height: 14px; color: #ef4444; }
+
+    .g-exposures-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .g-exposure-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4.5px solid #ef4444;
+      border-radius: 12px;
+      padding: 13px 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .g-exposure-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+    .g-exposure-text {
+      font-size: 11.5px;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* 5. Defensible Controls (6 Points with Blue Checks) */
+    .g-eyebrow-blue { color: #1d4ed8; }
+    .g-eyebrow-blue svg { width: 14px; height: 14px; color: #2563eb; }
+
+    .g-controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .g-control-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 13px 15px;
+    }
+    .g-control-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .g-check-icon {
+      width: 17px;
+      height: 17px;
+      background: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .g-check-icon svg { width: 10px; height: 10px; color: #ffffff; stroke-width: 3; }
+    .g-control-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+    .g-control-text {
+      font-size: 11px;
+      color: #475569;
+      line-height: 1.4;
+      padding-left: 25px;
+    }
+
+    /* 6. Bottom CTA Bar */
+    .g-cta-bar {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    }
+    .g-cta-content { display: flex; flex-direction: column; }
+    .g-cta-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+    .g-cta-subtitle {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #dbeafe;
+    }
+    .g-cta-btn {
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 22px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 7. Footer */
+    .g-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      margin-top: 18px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .g-footer-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.8px;
+    }
+    .g-footer-tags {
+      font-size: 11px;
+      font-weight: 800;
+      color: #2563eb;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10b981;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 100;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Nav -->
+  <header class="studio-nav">
+    <a href="index.html" class="brand-wrap">
+      <div class="brand-logo-hex">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+      </div>
+      <div>
+        <div class="brand-title">Profit<span>Machines</span></div>
+        <span class="brand-badge">Single Image Post Studio</span>
+      </div>
+    </a>
+
+    <div class="studio-actions">
+      <a href="index.html" class="btn btn-secondary">
+        &larr; Back to Gallery
+      </a>
+      <button class="btn btn-secondary" onclick="exportSvg()">
+        Copy Graphic SVG
+      </button>
+      <button class="btn btn-success" id="downloadPngBtn" onclick="downloadHighResPng()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download High-Res PNG (1200x1250)
+      </button>
+    </div>
+  </header>
+
+  <!-- Studio Main Layout -->
+  <div class="studio-layout">
+
+    <!-- Left Editor Pane -->
+    <aside class="editor-pane">
+      <div class="pane-header">
+        <h2 class="pane-title">Post Template Customizer</h2>
+        <p class="pane-subtitle">Choose a pre-built ProfitMachines topic or customize every element with your own content.</p>
+      </div>
+
+      <!-- Quick Topic Selector -->
+      <div class="form-group">
+        <label class="form-label" for="topicSelector">Select Pre-Built Topic</label>
+        <select id="topicSelector" class="form-select" onchange="loadSelectedTopic(this.value)">
+          <option value="1">Topic 001: Identifying Hidden Pipeline Opportunities</option>
+          <option value="3">Topic 003: Reducing Lead Capture to Sales Engagement Time</option>
+          <option value="5">Topic 005: Improving ICP Accuracy</option>
+          <option value="7">Topic 007: Diagnosing Pipeline Bottlenecks</option>
+          <option value="8">Topic 008: Improving Pipeline Quality vs Volume</option>
+          <option value="10">Topic 010: Building a More Predictable Pipeline</option>
+          <option value="11">Topic 011: Diagnosing Conversion Losses</option>
+          <option value="14">Topic 014: Reducing Friction in the Buying Journey</option>
+          <option value="16">Topic 016: Understanding Stalled Deals</option>
+          <option value="custom">-- Custom Freeform Mode --</option>
+        </select>
+      </div>
+
+      <!-- Section: Brand & Header -->
+      <div class="accordion-section">
+        <div class="accordion-header">1. Brand &amp; Category Header</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">Brand Subtitle</label>
+            <input type="text" id="inpBrandSub" class="form-input" value="A Division of ProfitMachines Global" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Established / Domain Tag</label>
+            <input type="text" id="inpEstLine" class="form-input" value="ESTABLISHED 2024 &bull; AI-NATIVE REVENUE ACCELERATION" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category Pill (Top Right)</label>
+            <input type="text" id="inpCategoryPill" class="form-input" value="B2B ENTERPRISE GTM ADVISORY" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sub-Header Keyword Tag</label>
+            <input type="text" id="inpKeywordPill" class="form-input" value="PIPELINE VELOCITY &bull; REVENUE ARCHITECTURE &bull; CONVERSION ENGINE" oninput="updateGraphic()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Main Headline & Subtitle -->
+      <div class="accordion-section">
+        <div class="accordion-header">2. Main Headline &amp; Framing</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">Headline Prefix</label>
+            <input type="text" id="inpH1Prefix" class="form-input" value="THE 72-HOUR MANDATE: IS YOUR" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Headline Highlighted Term (Blue Pill)</label>
+            <input type="text" id="inpH1Highlight" class="form-input" value="PIPELINE ARCHITECTURE" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Headline Suffix</label>
+            <input type="text" id="inpH1Suffix" class="form-input" value="SCALE-READY?" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sub-Headline (with vertical blue pipe)</label>
+            <textarea id="inpSubhead" class="form-textarea" oninput="updateGraphic()">Are Your Lead Routing Protocols and Deal Progression Stages Built for Multi-Million Pipeline Velocity?</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Hero Intelligence & Visual Cards -->
+      <div class="accordion-section">
+        <div class="accordion-header">3. Top Hero Diagnostic Cards</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">Left Card Tag</label>
+            <input type="text" id="inpIntelTag" class="form-input" value="VERIFIED COMMERCIAL BENCHMARK" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Left Card Title</label>
+            <input type="text" id="inpIntelTitle" class="form-input" value="Pipeline Conversion Decay" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Left Card Description</label>
+            <textarea id="inpIntelDesc" class="form-textarea" oninput="updateGraphic()">78% of B2B enterprise pipeline stalls between Demo and Proposal due to disconnected CRM handoffs and unaligned buying committee champions.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Left Card Source Attribution</label>
+            <input type="text" id="inpIntelSource" class="form-input" value="Gartner &amp; ProfitMachines Revenue Operations Benchmark | profitmachines.com" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Right Dark Card Title</label>
+            <input type="text" id="inpModelTitle" class="form-input" value="REVENUE ACCELERATION ENGINE" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Right Dark Card Caption</label>
+            <input type="text" id="inpModelCaption" class="form-input" value="Autonomous Revenue Verification" oninput="updateGraphic()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: 4-Point Exposures (Red Accent) -->
+      <div class="accordion-section">
+        <div class="accordion-header">4. Critical Exposures Matrix (4 Points)</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">Section Eyebrow Label</label>
+            <input type="text" id="inpExpEyebrow" class="form-input" value="CRITICAL PIPELINE &amp; COMMERCIAL EXPOSURES (4-POINT MATRIX)" oninput="updateGraphic()">
+          </div>
+          
+          <div style="border-top:1px solid #1e293b; padding-top:0.75rem; margin-top:0.75rem;">
+            <label class="form-label">Point 1 Title &amp; Text</label>
+            <input type="text" id="inpExp1T" class="form-input" style="margin-bottom:0.35rem;" value="Pipeline Leakage at Stage 2" oninput="updateGraphic()">
+            <textarea id="inpExp1D" class="form-textarea" oninput="updateGraphic()">Disconnected CRM handoffs resulting in dropped qualified leads with zero immutable audit trails.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.75rem; margin-top:0.75rem;">
+            <label class="form-label">Point 2 Title &amp; Text</label>
+            <input type="text" id="inpExp2T" class="form-input" style="margin-bottom:0.35rem;" value="Stalled Buying Committees" oninput="updateGraphic()">
+            <textarea id="inpExp2D" class="form-textarea" oninput="updateGraphic()">Unaddressed CFO / CIO procurement and risk objections stalling proposals beyond 60 days.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.75rem; margin-top:0.75rem;">
+            <label class="form-label">Point 3 Title &amp; Text</label>
+            <input type="text" id="inpExp3T" class="form-input" style="margin-bottom:0.35rem;" value="Rep Capacity &amp; Quota Variance" oninput="updateGraphic()">
+            <textarea id="inpExp3D" class="form-textarea" oninput="updateGraphic()">Top reps over-utilized while 60% of the sales team struggles without contextual AI meeting preparation.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.75rem; margin-top:0.75rem;">
+            <label class="form-label">Point 4 Title &amp; Text</label>
+            <input type="text" id="inpExp4T" class="form-input" style="margin-bottom:0.35rem;" value="Forecast Accuracy Blindspots" oninput="updateGraphic()">
+            <textarea id="inpExp4D" class="form-textarea" oninput="updateGraphic()">Subjective stage progression leading to unpredictable quarter-close variance and margin erosion.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: 6 Defensible Controls (Blue Accent) -->
+      <div class="accordion-section">
+        <div class="accordion-header">5. Solution Controls (6 Points)</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">Section Eyebrow Label</label>
+            <input type="text" id="inpCtrlEyebrow" class="form-input" value="HOW PROFITMACHINES BUILDS PREDICTABLE REVENUE (6 CONTROLS)" oninput="updateGraphic()">
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem;">
+            <label class="form-label">Control 1</label>
+            <input type="text" id="inpC1T" class="form-input" style="margin-bottom:0.35rem;" value="Multi-Channel Intent Capture" oninput="updateGraphic()">
+            <textarea id="inpC1D" class="form-textarea" oninput="updateGraphic()">Unified outbound and inbound routing capturing dark-funnel buying signals.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem;">
+            <label class="form-label">Control 2</label>
+            <input type="text" id="inpC2T" class="form-input" style="margin-bottom:0.35rem;" value="Deal Progression Cadence" oninput="updateGraphic()">
+            <textarea id="inpC2D" class="form-textarea" oninput="updateGraphic()">Automated buying committee alignment across multi-stakeholder approval cycles.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem;">
+            <label class="form-label">Control 3</label>
+            <input type="text" id="inpC3T" class="form-input" style="margin-bottom:0.35rem;" value="Single RevOps Data Vault" oninput="updateGraphic()">
+            <textarea id="inpC3D" class="form-textarea" oninput="updateGraphic()">Secure, unified revenue intelligence repository for instant deal auditability.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem;">
+            <label class="form-label">Control 4</label>
+            <input type="text" id="inpC4T" class="form-input" style="margin-bottom:0.35rem;" value="Real-Time Forecast Telemetry" oninput="updateGraphic()">
+            <textarea id="inpC4D" class="form-textarea" oninput="updateGraphic()">AI-driven pipeline velocity and probability scoring based on actual buyer activity.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem;">
+            <label class="form-label">Control 5</label>
+            <input type="text" id="inpC5T" class="form-input" style="margin-bottom:0.35rem;" value="Executive Deal War Rooms" oninput="updateGraphic()">
+            <textarea id="inpC5D" class="form-textarea" oninput="updateGraphic()">Defensible deal briefs and committee objection battlecards for complex closes.</textarea>
+          </div>
+
+          <div style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem;">
+            <label class="form-label">Control 6</label>
+            <input type="text" id="inpC6T" class="form-input" style="margin-bottom:0.35rem;" value="Continuous Revenue Advisory" oninput="updateGraphic()">
+            <textarea id="inpC6D" class="form-textarea" oninput="updateGraphic()">Ongoing execution coaching and deal margin optimization across the pipeline.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: CTA Banner & Footer -->
+      <div class="accordion-section">
+        <div class="accordion-header">6. Conversion CTA &amp; Footer</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label class="form-label">CTA Banner Headline</label>
+            <input type="text" id="inpCtaTitle" class="form-input" value="Schedule an Executive Revenue Acceleration Diagnostic" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CTA Banner Subtitle</label>
+            <input type="text" id="inpCtaSub" class="form-input" value="DM 'REVENUE-AUDIT' to review your pipeline readiness." oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CTA Button Label</label>
+            <input type="text" id="inpCtaBtn" class="form-input" value="REQUEST REVENUE DIAGNOSTIC &rarr;" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Footer URL</label>
+            <input type="text" id="inpFooterUrl" class="form-input" value="WWW.PROFITMACHINES.COM" oninput="updateGraphic()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Footer Tags</label>
+            <input type="text" id="inpFooterTags" class="form-input" value="DEMAND &bull; PIPELINE &bull; REVENUE OPS &bull; GTM ACCELERATION &bull; AI SALES" oninput="updateGraphic()">
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Live Canvas Stage -->
+    <main class="preview-stage">
+      <div class="preview-toolbar">
+        <span>Canvas Size: <strong>1200 &times; 1250 px</strong> (Ultra High-Res Infographic)</span>
+        <span>&bull;</span>
+        <span>LinkedIn Ratio: <strong>4:5 Vertical Portrait</strong></span>
+        <span>&bull;</span>
+        <button class="btn btn-secondary btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="zoomCanvas(0.6)">60%</button>
+        <button class="btn btn-secondary btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="zoomCanvas(0.8)">80%</button>
+        <button class="btn btn-secondary btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="zoomCanvas(1)">100%</button>
+      </div>
+
+      <div class="graphic-canvas-wrapper" id="canvasWrapper" style="transform: scale(0.68);">
+        <!-- ── MASTER GRAPHIC CONTAINER ── -->
+        <div id="graphicContainer">
+
+          <!-- 1. HEADER -->
+          <div>
+            <header class="g-header">
+              <div class="g-brand-group">
+                <div class="g-logo-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </div>
+                <div class="g-brand-text">
+                  <div class="g-company-name">PROFIT<span>MACHINES</span></div>
+                  <div class="g-company-sub" id="outBrandSub">A Division of ProfitMachines Global</div>
+                  <div class="g-est-line" id="outEstLine">ESTABLISHED 2024 &bull; AI-NATIVE REVENUE ACCELERATION</div>
+                </div>
+              </div>
+
+              <div class="g-category-pill" id="outCategoryPill">
+                B2B ENTERPRISE GTM ADVISORY
+              </div>
+            </header>
+
+            <!-- 2. HEADLINE AREA -->
+            <section class="g-title-section">
+              <div class="g-keyword-pill" id="outKeywordPill">
+                PIPELINE VELOCITY &bull; REVENUE ARCHITECTURE &bull; CONVERSION ENGINE
+              </div>
+
+              <h1 class="g-headline" id="outHeadline">
+                <span id="outH1Prefix">THE 72-HOUR MANDATE: IS YOUR</span>
+                <span class="g-headline-highlight" id="outH1Highlight">PIPELINE ARCHITECTURE</span>
+                <span id="outH1Suffix">SCALE-READY?</span>
+              </h1>
+
+              <div class="g-subheadline-wrap">
+                <p class="g-subheadline" id="outSubhead">
+                  | Are Your Lead Routing Protocols and Deal Progression Stages Built for Multi-Million Pipeline Velocity?
+                </p>
+              </div>
+            </section>
+
+            <!-- 3. TOP HERO DIAGNOSTIC CARDS (2 COLUMNS) -->
+            <section class="g-hero-grid">
+              <!-- Left Card -->
+              <div class="g-intel-card">
+                <div>
+                  <div class="g-intel-badge" id="outIntelTag">VERIFIED COMMERCIAL BENCHMARK</div>
+                  <div class="g-intel-title" id="outIntelTitle">Pipeline Conversion Decay</div>
+                  <p class="g-intel-body" id="outIntelDesc">
+                    78% of B2B enterprise pipeline stalls between Demo and Proposal due to disconnected CRM handoffs and unaligned buying committee champions.
+                  </p>
+                </div>
+                <div class="g-intel-source" id="outIntelSource">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span>Source Attribution: Gartner &amp; ProfitMachines Revenue Operations Benchmark | profitmachines.com</span>
+                </div>
+              </div>
+
+              <!-- Right Dark Card -->
+              <div class="g-model-card">
+                <div class="g-model-header" id="outModelTitle">REVENUE ACCELERATION ENGINE</div>
+                <div class="g-model-visual">
+                  <div class="g-shield-outer">
+                    <div class="g-shield-inner">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="g-model-caption" id="outModelCaption">Autonomous Revenue Verification</div>
+                </div>
+                <div style="font-size:10px; color:#64748b; text-align:center;">
+                  Continuous Multi-Stakeholder Telemetry
+                </div>
+              </div>
+            </section>
+
+            <!-- 4. CRITICAL EXPOSURES MATRIX (RED ACCENT) -->
+            <section>
+              <div class="g-section-eyebrow g-eyebrow-red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="outExpEyebrow">CRITICAL PIPELINE &amp; COMMERCIAL EXPOSURES (4-POINT MATRIX)</span>
+              </div>
+
+              <div class="g-exposures-grid">
+                <div class="g-exposure-card">
+                  <div class="g-exposure-title" id="outExp1T">Pipeline Leakage at Stage 2</div>
+                  <div class="g-exposure-text" id="outExp1D">Disconnected CRM handoffs resulting in dropped qualified leads with zero immutable audit trails.</div>
+                </div>
+                <div class="g-exposure-card">
+                  <div class="g-exposure-title" id="outExp2T">Stalled Buying Committees</div>
+                  <div class="g-exposure-text" id="outExp2D">Unaddressed CFO / CIO procurement and risk objections stalling proposals beyond 60 days.</div>
+                </div>
+                <div class="g-exposure-card">
+                  <div class="g-exposure-title" id="outExp3T">Rep Capacity &amp; Quota Variance</div>
+                  <div class="g-exposure-text" id="outExp3D">Top reps over-utilized while 60% of the sales team struggles without contextual AI meeting preparation.</div>
+                </div>
+                <div class="g-exposure-card">
+                  <div class="g-exposure-title" id="outExp4T">Forecast Accuracy Blindspots</div>
+                  <div class="g-exposure-text" id="outExp4D">Subjective stage progression leading to unpredictable quarter-close variance and margin erosion.</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 5. HOW PROFITMACHINES BUILDS PREDICTABLE REVENUE (6 CONTROLS) -->
+            <section>
+              <div class="g-section-eyebrow g-eyebrow-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span id="outCtrlEyebrow">HOW PROFITMACHINES BUILDS PREDICTABLE REVENUE (6 CONTROLS)</span>
+              </div>
+
+              <div class="g-controls-grid">
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC1T">Multi-Channel Intent Capture</div>
+                  </div>
+                  <div class="g-control-text" id="outC1D">Unified outbound and inbound routing capturing dark-funnel buying signals.</div>
+                </div>
+
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC2T">Deal Progression Cadence</div>
+                  </div>
+                  <div class="g-control-text" id="outC2D">Automated buying committee alignment across multi-stakeholder approval cycles.</div>
+                </div>
+
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC3T">Single RevOps Data Vault</div>
+                  </div>
+                  <div class="g-control-text" id="outC3D">Secure, unified revenue intelligence repository for instant deal auditability.</div>
+                </div>
+
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC4T">Real-Time Forecast Telemetry</div>
+                  </div>
+                  <div class="g-control-text" id="outC4D">AI-driven pipeline velocity and probability scoring based on actual buyer activity.</div>
+                </div>
+
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC5T">Executive Deal War Rooms</div>
+                  </div>
+                  <div class="g-control-text" id="outC5D">Defensible deal briefs and committee objection battlecards for complex closes.</div>
+                </div>
+
+                <div class="g-control-card">
+                  <div class="g-control-header">
+                    <div class="g-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div class="g-control-title" id="outC6T">Continuous Revenue Advisory</div>
+                  </div>
+                  <div class="g-control-text" id="outC6D">Ongoing execution coaching and deal margin optimization across the pipeline.</div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- 6. BOTTOM CTA BAR & 7. FOOTER -->
+          <div>
+            <div class="g-cta-bar">
+              <div class="g-cta-content">
+                <div class="g-cta-title" id="outCtaTitle">Schedule an Executive Revenue Acceleration Diagnostic</div>
+                <div class="g-cta-subtitle" id="outCtaSub">DM 'REVENUE-AUDIT' to review your pipeline readiness.</div>
+              </div>
+              <div class="g-cta-btn" id="outCtaBtn">
+                REQUEST REVENUE DIAGNOSTIC &rarr;
+              </div>
+            </div>
+
+            <footer class="g-footer">
+              <div class="g-footer-url" id="outFooterUrl">WWW.PROFITMACHINES.COM</div>
+              <div class="g-footer-tags" id="outFooterTags">DEMAND &bull; PIPELINE &bull; REVENUE OPS &bull; GTM ACCELERATION &bull; AI SALES</div>
+            </footer>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <div class="toast" id="toastBubble">Downloaded High-Res Infographic PNG!</div>
+
+  <script>
+    const topicsData = {
+      "1": {
+        brandSub: "A Division of ProfitMachines Global",
+        estLine: "ESTABLISHED 2024 • AI-NATIVE REVENUE ACCELERATION",
+        categoryPill: "PIPELINE ACCELERATION ADVISORY",
+        keywordPill: "PIPELINE VELOCITY • REVENUE ARCHITECTURE • CONVERSION ENGINE",
+        h1Prefix: "THE 72-HOUR MANDATE: IS YOUR",
+        h1Highlight: "PIPELINE ARCHITECTURE",
+        h1Suffix: "SCALE-READY?",
+        subhead: "| Are Your Lead Routing Protocols and Deal Progression Stages Built for Multi-Million Pipeline Velocity?",
+        intelTag: "VERIFIED COMMERCIAL BENCHMARK",
+        intelTitle: "Pipeline Conversion Decay",
+        intelDesc: "78% of B2B enterprise pipeline stalls between Demo and Proposal due to disconnected CRM handoffs and unaligned buying committee champions.",
+        intelSource: "Gartner & ProfitMachines Revenue Operations Benchmark | profitmachines.com",
+        modelTitle: "REVENUE ACCELERATION ENGINE",
+        modelCaption: "Autonomous Revenue Verification",
+        expEyebrow: "CRITICAL PIPELINE & COMMERCIAL EXPOSURES (4-POINT MATRIX)",
+        exp1T: "Pipeline Leakage at Stage 2",
+        exp1D: "Disconnected CRM handoffs resulting in dropped qualified leads with zero immutable audit trails.",
+        exp2T: "Stalled Buying Committees",
+        exp2D: "Unaddressed CFO / CIO procurement and risk objections stalling proposals beyond 60 days.",
+        exp3T: "Rep Capacity & Quota Variance",
+        exp3D: "Top reps over-utilized while 60% of the sales team struggles without contextual AI meeting preparation.",
+        exp4T: "Forecast Accuracy Blindspots",
+        exp4D: "Subjective stage progression leading to unpredictable quarter-close variance and margin erosion.",
+        ctrlEyebrow: "HOW PROFITMACHINES BUILDS PREDICTABLE REVENUE (6 CONTROLS)",
+        c1T: "Multi-Channel Intent Capture",
+        c1D: "Unified outbound and inbound routing capturing dark-funnel buying signals.",
+        c2T: "Deal Progression Cadence",
+        c2D: "Automated buying committee alignment across multi-stakeholder approval cycles.",
+        c3T: "Single RevOps Data Vault",
+        c3D: "Secure, unified revenue intelligence repository for instant deal auditability.",
+        c4T: "Real-Time Forecast Telemetry",
+        c4D: "AI-driven pipeline velocity and probability scoring based on actual buyer activity.",
+        c5T: "Executive Deal War Rooms",
+        c5D: "Defensible deal briefs and committee objection battlecards for complex closes.",
+        c6T: "Continuous Revenue Advisory",
+        c6D: "Ongoing execution coaching and deal margin optimization across the pipeline.",
+        ctaTitle: "Schedule an Executive Revenue Acceleration Diagnostic",
+        ctaSub: "DM 'REVENUE-AUDIT' to review your pipeline readiness.",
+        ctaBtn: "REQUEST REVENUE DIAGNOSTIC →",
+        footerUrl: "WWW.PROFITMACHINES.COM",
+        footerTags: "DEMAND • PIPELINE • REVENUE OPS • GTM ACCELERATION • AI SALES"
+      },
+      "3": {
+        brandSub: "AI-Native Speed-to-Lead Engine",
+        estLine: "ESTABLISHED 2024 • COMMERCIAL VELOCITY ARCHITECTURE",
+        categoryPill: "SALES VELOCITY & INBOUND ROUTING",
+        keywordPill: "SPEED-TO-LEAD • 5-MINUTE SLA • AI ROUTING MATRIX",
+        h1Prefix: "THE 5-MINUTE WINDOW: ARE YOUR",
+        h1Highlight: "QUALIFIED BUYERS",
+        h1Suffix: "SLIPPING TO COMPETITORS?",
+        subhead: "| Why 80% of Enterprise Inbound Value Evaporates When Sales Response Times Exceed 30 Minutes.",
+        intelTag: "INBOUND VELOCITY METRIC",
+        intelTitle: "9x Qualification Decay",
+        intelDesc: "Leads engaged within 5 minutes demonstrate a 900% higher qualification-to-pipeline progression rate compared to 60-minute delays.",
+        intelSource: "Harvard Business Review & ProfitMachines Telemetry Audit | profitmachines.com",
+        modelTitle: "AUTONOMOUS ENGAGEMENT ENGINE",
+        modelCaption: "Instant Inbound Enrichment",
+        expEyebrow: "INBOUND LATENCY DRAG FACTORS (4-POINT MATRIX)",
+        exp1T: "Manual SDR Lead Assignment",
+        exp1D: "Leads wait in static CRM queues for hours during peak decision-maker buying moments.",
+        exp2T: "Unenriched Inbound Forms",
+        exp2D: "Reps lack buyer context, firmographic scale, and technical stack profile before dial.",
+        exp3T: "Timezone Blindspots",
+        exp3D: "Global buyers in non-domestic markets experience 14+ hour response lags.",
+        exp4T: "Calendar Friction Ceilings",
+        exp4D: "Multi-step booking forms losing 42% of high-intent enterprise executives before confirmation.",
+        ctrlEyebrow: "HOW PROFITMACHINES ACCELERATES INBOUND VELOCITY (6 CONTROLS)",
+        c1T: "Instant AI Lead Enrichment",
+        c1D: "Automated firmographic and intent synthesis completed in under 4 seconds.",
+        c2T: "Real-Time Committee Routing",
+        c2D: "Direct matching to dedicated account executives based on deal complexity and industry.",
+        c3T: "Interactive Executive Booking",
+        c3D: "Zero-friction 1-click meeting calendar integrated directly into intake confirmation.",
+        c4T: "Contextual Brief Delivery",
+        c4D: "AI-generated deal dossier delivered to sales rep before opening meeting dialogue.",
+        c5T: "Autonomous Signal Monitoring",
+        c5D: "Instant notification when key committee members view pricing or documentation.",
+        c6T: "Execution Telemetry Dashboard",
+        c6D: "Live measurement of rep response velocity and conversation conversion ratios.",
+        ctaTitle: "Audit Your Speed-to-Lead Response Velocity",
+        ctaSub: "DM 'SPEED-AUDIT' to eliminate qualification leakage.",
+        ctaBtn: "BOOK VELOCITY AUDIT →",
+        footerUrl: "WWW.PROFITMACHINES.COM",
+        footerTags: "INBOUND • SPEED-TO-LEAD • AI ROUTING • SALES EXECUTION"
+      },
+      "5": {
+        brandSub: "Targeting & Commercial Precision",
+        estLine: "ESTABLISHED 2024 • DEMAND DISCOVERY FRAMEWORK",
+        categoryPill: "IDEAL CUSTOMER PROFILE ARCHITECTURE",
+        keywordPill: "ICP FIDELITY • ACCOUNT SCORING • MARKET POSITIONING",
+        h1Prefix: "THE TAM ILLUSION: IS YOUR",
+        h1Highlight: "ICP SEGMENTATION",
+        h1Suffix: "DRAINING YOUR GTM CAPITAL?",
+        subhead: "| How Targeting Broad Vanity Accounts Destroys Rep Productivity and Inflates Customer Acquisition Costs.",
+        intelTag: "TARGETING EFFICIENCY BENCHMARK",
+        intelTitle: "3.2x Win-Rate Disparity",
+        intelDesc: "Enterprise sales teams operating with strict multi-variable ICP definitions achieve 320% higher close rates than teams pursuing generic market tiers.",
+        intelSource: "ProfitMachines GTM Optimization Study | profitmachines.com",
+        modelTitle: "HIGH-FIDELITY ICP FILTER",
+        modelCaption: "Precision Signal Extraction",
+        expEyebrow: "GENERIC TARGETING EXPOSURES (4-POINT MATRIX)",
+        exp1T: "Vanity TAM Outbound",
+        exp1D: "Reps wasting 65% of outbound dial capacity on accounts with zero urgent buying catalysts.",
+        exp2T: "High Discounting Pressure",
+        exp2D: "Low-fit deals requiring massive concessions to close, ultimately churning within 9 months.",
+        exp3T: "Customer Success Drag",
+        exp3D: "Non-ICP accounts consume 4x more implementation engineering with 50% lower expansion.",
+        exp4T: "Rep Motivation Burnout",
+        exp4D: "High rejection rates on ill-fitted accounts driving sales turnover and missed quotas.",
+        ctrlEyebrow: "HOW PROFITMACHINES ENGINEERS HIGH-YIELD ICPs (6 CONTROLS)",
+        c1T: "Historical Win-Loss Telemetry",
+        c1D: "Algorithmic audit of highest gross-margin closed deals and fastest sales velocity.",
+        c2T: "Technographic Signal Triggers",
+        c2D: "Real-time identification of tech stack incompatibilities and renewal cliff events.",
+        c3T: "Leadership Catalyst Signals",
+        c3D: "Trigger tracking for new CXO hires and funding rounds within 30 days.",
+        c4T: "Dynamic Account Scoring",
+        c4D: "Autonomous tier-ranking filtering out vanity accounts before rep assignment.",
+        c5T: "Custom Messaging Playbooks",
+        c5D: "Tailored value propositions aligned with specific industry pain matrices.",
+        c6T: "Ongoing ICP Calibration",
+        c6D: "Monthly refinement based on gross margin retention and expansion cohort data.",
+        ctaTitle: "Eliminate Outbound Waste with an ICP Precision Audit",
+        ctaSub: "DM 'ICP-PRECISION' to focus your sales capacity on high-margin winners.",
+        ctaBtn: "REQUEST ICP AUDIT →",
+        footerUrl: "WWW.PROFITMACHINES.COM",
+        footerTags: "ICP PRECISION • ACCOUNT SCORING • PIPELINE QUALITY • MARGIN GAINS"
+      }
+    };
+
+    function updateGraphic() {
+      // Header
+      document.getElementById('outBrandSub').innerHTML = document.getElementById('inpBrandSub').value;
+      document.getElementById('outEstLine').innerHTML = document.getElementById('inpEstLine').value;
+      document.getElementById('outCategoryPill').innerHTML = document.getElementById('inpCategoryPill').value;
+      document.getElementById('outKeywordPill').innerHTML = document.getElementById('inpKeywordPill').value;
+
+      // Headline
+      document.getElementById('outH1Prefix').innerHTML = document.getElementById('inpH1Prefix').value;
+      document.getElementById('outH1Highlight').innerHTML = document.getElementById('inpH1Highlight').value;
+      document.getElementById('outH1Suffix').innerHTML = document.getElementById('inpH1Suffix').value;
+      document.getElementById('outSubhead').innerHTML = '| ' + document.getElementById('inpSubhead').value.replace(/^\|\s*/, '');
+
+      // Top Hero
+      document.getElementById('outIntelTag').innerHTML = document.getElementById('inpIntelTag').value;
+      document.getElementById('outIntelTitle').innerHTML = document.getElementById('inpIntelTitle').value;
+      document.getElementById('outIntelDesc').innerHTML = document.getElementById('inpIntelDesc').value;
+      document.getElementById('outIntelSource').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> <span>Source Attribution: ' + document.getElementById('inpIntelSource').value.replace(/^Source Attribution:\s*/i, '') + '</span>';
+      document.getElementById('outModelTitle').innerHTML = document.getElementById('inpModelTitle').value;
+      document.getElementById('outModelCaption').innerHTML = document.getElementById('inpModelCaption').value;
+
+      // Exposures
+      document.getElementById('outExpEyebrow').innerHTML = document.getElementById('inpExpEyebrow').value;
+      document.getElementById('outExp1T').innerHTML = document.getElementById('inpExp1T').value;
+      document.getElementById('outExp1D').innerHTML = document.getElementById('inpExp1D').value;
+      document.getElementById('outExp2T').innerHTML = document.getElementById('inpExp2T').value;
+      document.getElementById('outExp2D').innerHTML = document.getElementById('inpExp2D').value;
+      document.getElementById('outExp3T').innerHTML = document.getElementById('inpExp3T').value;
+      document.getElementById('outExp3D').innerHTML = document.getElementById('inpExp3D').value;
+      document.getElementById('outExp4T').innerHTML = document.getElementById('inpExp4T').value;
+      document.getElementById('outExp4D').innerHTML = document.getElementById('inpExp4D').value;
+
+      // Controls
+      document.getElementById('outCtrlEyebrow').innerHTML = document.getElementById('inpCtrlEyebrow').value;
+      document.getElementById('outC1T').innerHTML = document.getElementById('inpC1T').value;
+      document.getElementById('outC1D').innerHTML = document.getElementById('inpC1D').value;
+      document.getElementById('outC2T').innerHTML = document.getElementById('inpC2T').value;
+      document.getElementById('outC2D').innerHTML = document.getElementById('inpC2D').value;
+      document.getElementById('outC3T').innerHTML = document.getElementById('inpC3T').value;
+      document.getElementById('outC3D').innerHTML = document.getElementById('inpC3D').value;
+      document.getElementById('outC4T').innerHTML = document.getElementById('inpC4T').value;
+      document.getElementById('outC4D').innerHTML = document.getElementById('inpC4D').value;
+      document.getElementById('outC5T').innerHTML = document.getElementById('inpC5T').value;
+      document.getElementById('outC5D').innerHTML = document.getElementById('inpC5D').value;
+      document.getElementById('outC6T').innerHTML = document.getElementById('inpC6T').value;
+      document.getElementById('outC6D').innerHTML = document.getElementById('inpC6D').value;
+
+      // CTA & Footer
+      document.getElementById('outCtaTitle').innerHTML = document.getElementById('inpCtaTitle').value;
+      document.getElementById('outCtaSub').innerHTML = document.getElementById('inpCtaSub').value;
+      document.getElementById('outCtaBtn').innerHTML = document.getElementById('inpCtaBtn').value;
+      document.getElementById('outFooterUrl').innerHTML = document.getElementById('inpFooterUrl').value;
+      document.getElementById('outFooterTags').innerHTML = document.getElementById('inpFooterTags').value;
+    }
+
+    function loadSelectedTopic(val) {
+      if (val === 'custom') return;
+      const t = topicsData[val];
+      if (!t) return;
+
+      document.getElementById('inpBrandSub').value = t.brandSub;
+      document.getElementById('inpEstLine').value = t.estLine;
+      document.getElementById('inpCategoryPill').value = t.categoryPill;
+      document.getElementById('inpKeywordPill').value = t.keywordPill;
+
+      document.getElementById('inpH1Prefix').value = t.h1Prefix;
+      document.getElementById('inpH1Highlight').value = t.h1Highlight;
+      document.getElementById('inpH1Suffix').value = t.h1Suffix;
+      document.getElementById('inpSubhead').value = t.subhead.replace(/^\|\s*/, '');
+
+      document.getElementById('inpIntelTag').value = t.intelTag;
+      document.getElementById('inpIntelTitle').value = t.intelTitle;
+      document.getElementById('inpIntelDesc').value = t.intelDesc;
+      document.getElementById('inpIntelSource').value = t.intelSource;
+      document.getElementById('inpModelTitle').value = t.modelTitle;
+      document.getElementById('inpModelCaption').value = t.modelCaption;
+
+      document.getElementById('inpExpEyebrow').value = t.expEyebrow;
+      document.getElementById('inpExp1T').value = t.exp1T;
+      document.getElementById('inpExp1D').value = t.exp1D;
+      document.getElementById('inpExp2T').value = t.exp2T;
+      document.getElementById('inpExp2D').value = t.exp2D;
+      document.getElementById('inpExp3T').value = t.exp3T;
+      document.getElementById('inpExp3D').value = t.exp3D;
+      document.getElementById('inpExp4T').value = t.exp4T;
+      document.getElementById('inpExp4D').value = t.exp4D;
+
+      document.getElementById('inpCtrlEyebrow').value = t.ctrlEyebrow;
+      document.getElementById('inpC1T').value = t.c1T;
+      document.getElementById('inpC1D').value = t.c1D;
+      document.getElementById('inpC2T').value = t.c2T;
+      document.getElementById('inpC2D').value = t.c2D;
+      document.getElementById('inpC3T').value = t.c3T;
+      document.getElementById('inpC3D').value = t.c3D;
+      document.getElementById('inpC4T').value = t.c4T;
+      document.getElementById('inpC4D').value = t.c4D;
+      document.getElementById('inpC5T').value = t.c5T;
+      document.getElementById('inpC5D').value = t.c5D;
+      document.getElementById('inpC6T').value = t.c6T;
+      document.getElementById('inpC6D').value = t.c6D;
+
+      document.getElementById('inpCtaTitle').value = t.ctaTitle;
+      document.getElementById('inpCtaSub').value = t.ctaSub;
+      document.getElementById('inpCtaBtn').value = t.ctaBtn;
+      document.getElementById('inpFooterUrl').value = t.footerUrl;
+      document.getElementById('inpFooterTags').value = t.footerTags;
+
+      updateGraphic();
+    }
+
+    function zoomCanvas(scale) {
+      document.getElementById('canvasWrapper').style.transform = 'scale(' + scale + ')';
+    }
+
+    async function downloadHighResPng() {
+      const btn = document.getElementById('downloadPngBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Rendering 1200x1250 PNG...';
+      btn.disabled = true;
+
+      const container = document.getElementById('graphicContainer');
+      const originalTransform = document.getElementById('canvasWrapper').style.transform;
+      document.getElementById('canvasWrapper').style.transform = 'none';
+
+      try {
+        const canvas = await html2canvas(container, {
+          scale: 2, // 2400x2500 ultra high resolution
+          useCORS: true,
+          backgroundColor: '#fbfcfd'
+        });
+
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'ProfitMachines-Single-Image-Post.png';
+        link.href = image;
+        link.click();
+
+        showToast('Downloaded High-Res Infographic PNG!');
+      } catch (err) {
+        alert('Could not render image automatically. You can copy graphic SVG or take a high-res screenshot.');
+        console.error(err);
+      } finally {
+        document.getElementById('canvasWrapper').style.transform = originalTransform;
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function exportSvg() {
+      navigator.clipboard.writeText(document.getElementById('graphicContainer').outerHTML);
+      showToast('Copied Graphic HTML/SVG to Clipboard!');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastBubble');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>
